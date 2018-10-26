@@ -1,6 +1,7 @@
 ---
 title: "Apache VCL"
 last_updated: Oct, 17 2018
+permalink: index.html
 ---
 VCL stands for Virtual Computing Lab.  It is a free & open-source cloud computing platform with the primary goal of delivering dedicated, custom compute environments to users.
 

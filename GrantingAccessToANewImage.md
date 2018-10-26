@@ -5,7 +5,7 @@ keywords: Granting, access, new, image
 last_updated: Oct 25, 2018
 summary:
 sidebar: mydoc_sidebar
-permalink: grantingaccesstoanewimage.html
+permalink: granting-access-to-a-new-image.html
 ---
 ## Overview
 

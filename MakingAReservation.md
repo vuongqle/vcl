@@ -1,7 +1,7 @@
 ---
 title: "Making a Reservation"
 last_updated: Oct, 17 2018
-url: MakingAReservation.html
+url: Making-A-Reservation.html
 
 ---
 

@@ -5,7 +5,7 @@ keywords: image, creation
 last_updated: Oct 16, 2018
 summary:
 sidebar: mydoc_sidebar
-permalink: imagecreation.html
+permalink: image-creation.html
 ---
 
 <img src="images/index.png" width="400" border="1">
