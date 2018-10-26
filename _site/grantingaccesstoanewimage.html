@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Granting Access to a New Image | vcl</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Granting Access to a New Image" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<meta property="og:description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<link rel="canonical" href="http://localhost:4000/grantingaccesstoanewimage.html" />
+<meta property="og:url" content="http://localhost:4000/grantingaccesstoanewimage.html" />
+<meta property="og:site_name" content="vcl" />
+<script type="application/ld+json">
+{"headline":"Granting Access to a New Image","url":"http://localhost:4000/grantingaccesstoanewimage.html","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=77ba80b006584a07b9c0a48e9b6863d9a3058f5f">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+
+      <h1><a href="http://localhost:4000/">Granting Access to a New Image</a></h1> 
+
+
+      <h2 id="overview">Overview</h2>
+
+<p>Once you have created a new image, there are a few things you have to do to allow other people to use it.  If you don’t have access to do any of the following steps, you will need to get a VCL administrator to do them for you.</p>
+
+<p>When you create a new image, it is only available to you, and it is only allowed to be run on a few computers that have been set aside for the testing of new images.</p>
+
+<p><strong>NOTE:</strong> After you have been through these steps one time, if you are granting the same set of users access to a new image, you may only have to perform step 1.1 for subsequent images.</p>
+
+<h3 id="step-1-image-mapping">Step 1: Image Mapping</h3>
+
+<p>Images are mapped to be run on a set of computers. See the documentation on <a href="resourcemapping.html">Resource Mapping</a> to learn more about why this is done. For your new image to be able to run on more computers than just those designated for testing, you need to map it to a set of computers. There are a few steps to this process:</p>
+
+<ol>
+  <li>You need to make your image a member of an image group
+    <ul>
+      <li>Select <strong>Manage Images -&gt; Edit Image Grouping</strong></li>
+      <li>Select your image from the drop down box and click <strong>Get Groups</strong></li>
+      <li>Choose one or more image groups to which you would like to add the image from the box on the right</li>
+      <li>Click <strong>Add</strong> to make the image a member of the group(s)</li>
+    </ul>
+  </li>
+  <li>You need to map the image group(s) you selected in #1 to one or more computer groups (if they are not already mapped)
+    <ul>
+      <li>Select <strong>Manage Images -&gt; Edit Image Mapping</strong></li>
+      <li>Do the following for each group from #1
+        <ul>
+          <li>Select the image group from the drop down box and click <strong>Get Computer Groups</strong></li>
+          <li>Choose one or more computer groups from the box on the right, in which you would like to map the image group.</li>
+          <li>Click <strong>Add</strong> to map the image group to the computer group(s)</li>
+        </ul>
+      </li>
+      <li><strong><em>Note:</em></strong> there is an assumption that the computer groups you selected already have computers within those groups.</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="step-2-privileges">Step 2: Privileges</h3>
+
+<p>Now, you need to grant access to use the image to a user or group of users under the Privileges section of the site.  Here are the steps involved:</p>
+
+<ol>
+  <li>Select <strong>Privileges</strong></li>
+  <li>Choose an existing node or create a new node in the tree structure in the upper portion of the page where you would like to assign the user(s) access</li>
+  <li>Now, you need to grant the user <strong><em>imageCheckOut</em></strong> at the node.  You can do this for an individual user or a group of users.
+    <ul>
+      <li>Individual User:
+        <ul>
+          <li>Click <strong>Add User</strong></li>
+          <li>Enter the user’s id (you may need to include the user’s affiliation) in the text box and select the <strong>imageCheckOut</strong> checkbox</li>
+          <li>Click <strong>Submit New User</strong></li>
+        </ul>
+      </li>
+      <li>User Groups
+        <ul>
+          <li>Click <strong>Add Group</strong></li>
+          <li>Select the user group from the drop-down box and select the <strong>imageCheckout</strong> checkbox</li>
+          <li>Click <strong>Submit New User Group</strong></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Next, you need to make sure the image group in which you placed the image in #1 of <strong><em>Image Mapping</em></strong> is available at this node. If it is, go on to the next step, if not:
+    <ul>
+      <li>Click <strong>Add Resource Group</strong></li>
+      <li>Select the image group from the drop-down box and select the <strong>available</strong> checkbox</li>
+      <li>Click <strong>Submit New Resource Group</strong></li>
+    </ul>
+  </li>
+  <li>Finally, you need to make sure the computer group(s) selected in #2 of <strong><em>Image Mapping</em></strong> are also available here. If so, you are finished.  If not:
+    <ul>
+      <li>Click <strong>Add Resource Group</strong></li>
+      <li>Select the computer group from the drop-down box and select the <strong>available</strong> checkbox</li>
+      <li>Click <strong>Submit New Resource Group</strong></li>
+    </ul>
+  </li>
+</ol>
+
+<p>Now, the user or user groups you have added to this node will be able to make reservations for the new image.</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/pathoma4/vcl/edit/gh-pages/GrantingAccessToANewImage.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>
