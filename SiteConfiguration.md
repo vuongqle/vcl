@@ -2,7 +2,7 @@
 title: Site Configuration
 tags: [site, configuration]
 keywords:
-last_updated: Oct 31, 2018
+last_updated: Nov 1, 2018
 summary:
 sidebar: mydoc_sidebar
 permalink: site-configuration.html

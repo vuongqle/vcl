@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Creating Cluster Environments | vcl</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Creating Cluster Environments" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<meta property="og:description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<link rel="canonical" href="http://localhost:4000/creating-cluster-environments.html" />
+<meta property="og:url" content="http://localhost:4000/creating-cluster-environments.html" />
+<meta property="og:site_name" content="vcl" />
+<script type="application/ld+json">
+{"headline":"Creating Cluster Environments","url":"http://localhost:4000/creating-cluster-environments.html","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=c5ee72ca2b9d0be739507e9f1dc6de0193ac3a7a">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+
+      <h1><a href="http://localhost:4000/">Creating Cluster Environments</a></h1> 
+
+
+      <p>Cluster environments are created from existing VCL images.</p>
+
+<p>The terms parent and child are used in this document and with the VCL provisioning:</p>
+
+<ul>
+  <li><strong>parent</strong> =  the primary image or selectable image through the VCL New Reservation menu</li>
+  <li><strong>child</strong> = the second image or images that are also loaded and are the sub images associated with the parent image</li>
+</ul>
+
+<p>A file containing the parent and child public IP addresses are added to a cluster_info text file that is located on each node. The file locations are either /etc/cluster_info or C:\cluster_info</p>
+
+<p>The firewall on each node in a cluster is automatically configured by VCL to allow all traffic from each other node in the cluster.</p>
+
+<h3 id="to-create-a-cluster-image">To Create a Cluster Image</h3>
+
+<ul>
+  <li>Select Manage Images -&gt; Edit Image Profiles</li>
+  <li>Select edit beside the parent image</li>
+  <li>Click on  Advanced Options</li>
+  <li>Select Manage Subimages</li>
+  <li>In the window select a child image
+    <ul>
+      <li>The child image can be the same as the parent image or another.</li>
+    </ul>
+  </li>
+  <li>Repeat adding as many subimages as needed (or have nodes for).</li>
+</ul>
+
+<p>Additional features that can assist in a cluster are the vcl_post_load and vcl_post_reserve scripts. These two scripts are useful to configure the cluster, start or restart services, or other tasks the require unique settings. Since the hostname and IP address of VCL nodes will change when provisioned customization will be needed to make things work properly.</p>
+
+<p>The scripts are:</p>
+
+<ul>
+  <li>vcl_post_load
+    <ul>
+      <li>File location in Linux /etc/init.d/vcl_post_load</li>
+      <li>File location in Windows is SYSTEMROOT, usually C:\Windows\vcl_post_reserve.cmd</li>
+      <li>Executed after a node is loaded during the post_load process during a new reservation or reload</li>
+      <li>Created by the image owner</li>
+      <li>Ideal for editing configuration files and starting services</li>
+    </ul>
+  </li>
+  <li>vcl_post_reserve
+    <ul>
+      <li>Linux File location /etc/init.d/vcl_post_load</li>
+      <li>Windows File location is SYSTEMROOT, usually C:\Windows\vcl_post_load.cmd</li>
+      <li>Executed during an active reservation, when user hits “Connect” button</li>
+      <li>Created by the image owner</li>
+      <li>Ideal for making custom changes to configuration files, such as Cluster on Demand</li>
+    </ul>
+  </li>
+</ul>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/pathoma4/vcl/edit/gh-pages/CreatingClusterEnvironments.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>
