@@ -27,6 +27,6 @@ When you're finished configuring the remote computer and are ready to save the i
 9. You can usually leave the [Advanced Options](advanced-options.html) alone
 10. Click Confirm Image
 11. Double check what was entered, then click Add Image
-12. You will then be presented with an Installer Agreement. If you agree to it, click I agree to start the imaging process
+12. You will then be presented with an Installer Agreement. If you agree to it, click I agree to start the imaging process.
 
 The imaging process takes roughly 20-25 minutes to complete. Afterward, you should receive an email saying your image is ready for testing (occasionally, if there is a lot of software installed in the image or if the system is extremely busy, this can take as long as 90 minutes).
