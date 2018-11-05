@@ -2,7 +2,6 @@
 title: "Making a Reservation"
 last_updated: Oct, 17 2018
 permalink: Making-A-Reservation.html
-
 ---
 
 If using a version of VCL prior to 2.4, please see [Making a Reservation (previous to 2.4)](making-a-reservation-previous-2.4).
