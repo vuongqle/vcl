@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Computer Predictive Loading Modules and Power Off | vcl</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Computer Predictive Loading Modules and Power Off" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<meta property="og:description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<link rel="canonical" href="http://localhost:4000/computer-predictive-loading-modules-power-off.html" />
+<meta property="og:url" content="http://localhost:4000/computer-predictive-loading-modules-power-off.html" />
+<meta property="og:site_name" content="vcl" />
+<script type="application/ld+json">
+{"headline":"Computer Predictive Loading Modules and Power Off","url":"http://localhost:4000/computer-predictive-loading-modules-power-off.html","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=c246c9df3ed0d4e00d0f2d674f9e04eae69e55fb">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+
+      <h1><a href="http://localhost:4000/">Computer Predictive Loading Modules and Power Off</a></h1> 
+
+
+      <p>At the end of a reservation VCL must do something with the node that was just used. This action is controlled by the Predictive Loading Modules. Previous to version 2.4, these were set as an attribute of Management Nodes. In the 2.4 release, they were moved to be an attribute of Computers. As of version 2.4, there are 3 options to choose from:</p>
+
+<ul>
+  <li>Reload with last image - deploy the same image as just used</li>
+  <li>Reload image based on recent user demand - deploy an image selected by analyzing historical usage</li>
+  <li>Unload/power off after reservation - power off the node and, for VMs, unregister it</li>
+</ul>
+
+<p><strong>Reload with last image</strong> is pretty straightforward. It does a good job of handling spikes for specific images because, the more the image is used concurrently, the more that image is reloaded as those reservations end.</p>
+
+<p><strong>Reload image based on recent user demand</strong> analyzes reservation log data to determine the most popular set of images over a time frame. The time frame used varies depending on the percentage of nodes being used. The higher the percentage of nodes in use, the shorter the time frame. Then, it selects the most popular image during that time frame that is not already preloaded on at least two nodes. This module does a good job providing a variety of preloaded images. However, it does not handle spikes for specific images well.</p>
+
+<p><strong>Unload/power off after reservation</strong> is different in that it doesn’t actually load the node with anything. Instead, it powers off bare metal nodes and shuts down and unregisters virtual nodes. This is useful to reduce load on hypervisors and to save power. However, it requires a full load time the next time the node is used.</p>
+
+<p><strong>Exceptions</strong></p>
+
+<p>There are 2 exceptions to the predictive loading modules:</p>
+
+<ul>
+  <li>upcoming reservation</li>
+  <li>admin selected reload image</li>
+</ul>
+
+<p>If there is an upcoming reservation for the node within the next 50 minutes, the image from that reservation will be loaded on the node.</p>
+
+<p>If, during the previous reservation, an administrator selected to reload the node with a certain image from the Manage Computers section of the site, it will be loaded with that image.</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/pathoma4/vcl/edit/gh-pages/ComputerPredictiveLoadingModulesAndPowerOff.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>
