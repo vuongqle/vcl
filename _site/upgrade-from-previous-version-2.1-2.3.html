@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Upgrade From Previous Version (2.1 to 2.3) | vcl</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Upgrade From Previous Version (2.1 to 2.3)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<meta property="og:description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<link rel="canonical" href="http://localhost:4000/upgrade-from-previous-version-2.1-2.3.html" />
+<meta property="og:url" content="http://localhost:4000/upgrade-from-previous-version-2.1-2.3.html" />
+<meta property="og:site_name" content="vcl" />
+<script type="application/ld+json">
+{"headline":"Upgrade From Previous Version (2.1 to 2.3)","url":"http://localhost:4000/upgrade-from-previous-version-2.1-2.3.html","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=c246c9df3ed0d4e00d0f2d674f9e04eae69e55fb">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+
+      <h1><a href="http://localhost:4000/">Upgrade From Previous Version (2.1 to 2.3)</a></h1> 
+
+
+      <p>This page provides information on how to upgrade from VCL 2.1 to VCL 2.3. Please note it only applies for the upgrade from 2.1 to 2.3, this may or may not work for other versions.</p>
+
+<h3 id="basic-steps">Basic Steps</h3>
+
+<ul>
+  <li><a href="#download-and-extract-23-code">Download and Extract 2.3 code</a></li>
+  <li><a href="#shut-down-services">Shutdown httpd and VCLD services</a></li>
+  <li><a href="#create-a-backup-of-vcl-database">Create backup of VCL Database</a></li>
+  <li><a href="#update-mysql-schema">Update mysql schema</a></li>
+  <li><a href="#update-web-code">Update Web code, create a backup, copy in new, make changes</a></li>
+  <li><a href="#restart-httpd-service">Restart httpd service</a></li>
+  <li><a href="#update-management-node-code">Update Management node vcl code, create a backup, copy in new, make changes</a></li>
+  <li><a href="#restart-vcld-service">Restart vcld service</a></li>
+</ul>
+
+<h3 id="download-and-extract-23-code">Download and Extract 2.3 code</h3>
+
+<ol>
+  <li>Follow instructions on <a href="vcl-2.3.html">VCL 2.3</a> Release page to download and verify apache-VCL-2.3.tar.bz2 and put in in /root</li>
+  <li>
+    <p>extract VCL 2.3 code</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> tar xjf apache-VCL-2.3.tar.bz2
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="shut-down-services">Shut Down Services</h3>
+
+<p>Shutdown the httpd and vcld services</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    service httpd stop or /etc/init.d/httpd stop
+
+    service vcld stop or /etc/init.d/vcld stop
+</code></pre></div></div>
+
+<h3 id="create-a-backup-of-vcl-database">Create a Backup of VCL Database</h3>
+
+<p>We will create a backup of the vcl database. This will provide a restore point if necessary.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    mysqldump vcl &gt; ~/vcl-pre2.3-upgrade.sql
+</code></pre></div></div>
+
+<h3 id="update-mysql-schema">Update MySQL Schema</h3>
+
+<ol>
+  <li>
+    <p>This step updates the mysql schema.</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> cd /root/apache-VCL-2.3
+ mysql vcl &lt; mysql/update-vcl.sql
+</code></pre></div>    </div>
+
+    <p><em>One item of note:</em> A new resource group is added in update-vcl.sql - <strong>all profiles.</strong> Access to manage the group is added to the <strong>VCL-&gt;admin</strong> node in the privilege tree if that node exists. If not, you will need to add it manually after starting httpd again. To add it manually, pick a node in the privilege tree, scroll to <strong>Resources</strong>, click <strong>Add Resource Group</strong>, select <strong>serverprofile/all profiles</strong> from the drop-down box, check <strong>available</strong>, <strong>administer</strong>, <strong>manageGroup</strong>, and <strong>manageMapping</strong>, and click <strong>Submit New Resource Group</strong>.</p>
+  </li>
+  <li>
+    <p>Grant CREATE TEMPORARY TABLES to mysql user</p>
+
+    <p>The web code now requires access to create temporary tables in mysql. You need to grant the user your web code uses to access mysql the “CREATE TEMPORARY TABLES” permission. Look at the secrets.php file in your web code for the user and hostname. For example, if your web code is installed at /var/www/html/vcl, your secrets.php file would be /var/www/html/vcl/.ht-inc/secrets.php. Look for $vclhost and $vclusername. The secrets.php file might have something like:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $vclhost = 'localhost';
+
+ $vcluser = 'vcluser';
+</code></pre></div>    </div>
+
+    <p>Then, you need to issue the grant command to mysql. Using the values from above as examples, connect to mysql and then issue the grant command:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> mysql
+
+ GRANT CREATE TEMPORARY TABLES ON `vcl`.* TO 'vcluser'@'localhost';
+
+ exit
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="update-web-code">Update Web Code</h3>
+
+<p>This step we will move the 2.1 web directory out of the way, so we can copy in the new web code base. After copying in the new code, we will migrate your configuration changes. These instructions assume that you installed the vcl web code at /var/www/html/vcl. If you installed it elsewhere, replace /var/www/html/vcl with your vcl web root.</p>
+
+<ol>
+  <li>
+    <p>Move your old code out of the way</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> cd /var/www/html
+
+ mv vcl ~/vcl_2.1_web
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Copy the new code in place</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> cd /root/apache-VCL-2.3
+
+ cp -r web /var/www/html/vcl
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Copy your 2.1 config files</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> cd ~/vcl_2.1_web/.ht-inc
+
+ cp secrets.php pubkey.pem keys.pem /var/www/html/vcl/.ht-inc
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Make the maintenance directory writable by the web server user. You will need to know what user httpd runs as on your server. This can be found with</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ps aux | grep httpd
+</code></pre></div>    </div>
+
+    <p>Look at the first column. One process will be owned by root. The remaining processes will be owned by the web server user. Now, own /var/www/html/vcl/.ht-inc/maintenance to that user (replacing ‘apache’ with your web server user if different):</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> chown apache /var/www/html/vcl/.ht-inc/maintenance
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Update conf.php. When upgrading from 2.1, it is recommended to start with a fresh copy of conf-default.php from 2.3 and then apply your changes to it again.</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> cd /var/www/html/vcl/.ht-inc
+
+ cp conf-default.php conf.php
+</code></pre></div>    </div>
+
+    <p>Look at each value in the top section labeled <strong>Things in this section</strong> must be modified and set the value to what you had in your old conf.php file. If you are using LDAP authentication, you can copy all entries from $authMech out of your 2.1 conf.php file into your 2.3 conf.php file. However, note that you will need to add the following two additional keys to each entry. A description of these keys can be found in the 2.3 conf-default.php file.</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> "lookupuserbeforeauth" =&gt; 0,
+
+ "lookupuserfield" =&gt; '',
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="restart-httpd-service">Restart httpd service</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    service httpd start or /etc/init.d/httpd start
+</code></pre></div></div>
+
+<h3 id="update-management-node-code">Update management node code</h3>
+
+<p>This step will make a backup copy of the 2.1 vcl code base and then copy the new code over the existing code to preserve any drivers or other files you’ve added.</p>
+
+<ol>
+  <li>
+    <p>Copy 2.1 code base to a backup location</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> cd &lt;your vcl MN code root path&gt;
+
+ ie. cd /usr/local/
+
+ cp -r vcl ~/vcl_2.1_managementnode
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Copy in the 2.3 code base to /usr/local, copying in should preserve any drivers or other files you’ve added.</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> /bin/cp -r /root/apache-VCL-2.3/managementnode/* /usr/local/vcl
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Run install_perl_libs.pl to add any new perl library requirements:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> /usr/local/vcl/bin/install_perl_libs.pl
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="restart-vcld-service">Restart vcld service</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    service vcld start or /etc/init.d/vcld start
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/pathoma4/vcl/edit/gh-pages/UpgradeFromPreviousVersion(2.1-2.3).md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>
