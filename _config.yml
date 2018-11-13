@@ -9,3 +9,7 @@ site_title: VCL Documentation
 markdown: kramdown
 
 livereload: true
+
+sidebars:
+
+- mydoc_sidebar
