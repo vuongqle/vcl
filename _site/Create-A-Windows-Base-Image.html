@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Create a Windows Base Image | vcl</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Create a Windows Base Image" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<meta property="og:description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<link rel="canonical" href="http://localhost:4000/Create-A-Windows-Base-Image.html" />
+<meta property="og:url" content="http://localhost:4000/Create-A-Windows-Base-Image.html" />
+<meta property="og:site_name" content="vcl" />
+<script type="application/ld+json">
+{"headline":"Create a Windows Base Image","url":"http://localhost:4000/Create-A-Windows-Base-Image.html","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=a59310613d2417dcec774c5164ca949125da941a">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+
+      <h1><a href="http://localhost:4000/">Create a Windows Base Image</a></h1> 
+
+
+      <p>This page describes how to create a Windows base image.These instructions should work regardless of the provisioning engine being used (xCAT, VMware, etc.).  <strong>Ignore the VMware Only</strong> sections if you are attempting to create an image using xCAT or some other bare metal provisioning engine.</p>
+
+<h3 id="requirements">Requirements</h3>
+
+<p>You will need the following:</p>
+
+<ul>
+  <li>Windows installation ISO file</li>
+  <li>Windows product key or KMS server address</li>
+</ul>
+
+<p>The following must be done before an image can be captured:</p>
+
+<ul>
+  <li>The web, database, and management node has been installed and the management node is checking into the database.</li>
+  <li>A computer for the machine being captured has already been added to the VCL database</li>
+  <li>VMware Only:
+    <ul>
+      <li>A VM host computer on which the guest is running as been added to the VCL database</li>
+      <li>The guest VM has been assigned to the VM host via the Virtual Hosts link on the VCL website</li>
+    </ul>
+  </li>
+</ul>
+
+<p>These instructions assume you have root access and are using a bash shell.</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/pathoma4/vcl/edit/gh-pages/CreateAWindowsBaseImage.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>
