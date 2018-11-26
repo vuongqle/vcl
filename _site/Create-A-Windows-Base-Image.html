@@ -16,10 +16,10 @@
 <meta property="og:url" content="http://localhost:4000/Create-A-Windows-Base-Image.html" />
 <meta property="og:site_name" content="vcl" />
 <script type="application/ld+json">
-{"headline":"Create a Windows Base Image","url":"http://localhost:4000/Create-A-Windows-Base-Image.html","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
+{"url":"http://localhost:4000/Create-A-Windows-Base-Image.html","headline":"Create a Windows Base Image","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=a59310613d2417dcec774c5164ca949125da941a">
+    <link rel="stylesheet" href="/assets/css/style.css?v=b1dabfe1dd065c9b6400dde1c420b4e034217778">
   </head>
   <body>
     <div class="container-lg px-3 my-5 markdown-body">
@@ -52,6 +52,286 @@
 </ul>
 
 <p>These instructions assume you have root access and are using a bash shell.</p>
+
+<h3 id="vmware-only-create-a-virtual-machine">VMware Only: Create a Virtual Machine</h3>
+
+<h4 id="create-a-virtual-machine">Create a Virtual Machine</h4>
+
+<h5 id="vmware-esx-esxi-4-5-vcenter">VMware ESX, ESXi 4, 5, vcenter</h5>
+
+<p>The instructions assume that VMware has been configured with the following bridged networks:</p>
+
+<ul>
+  <li>Private: bridged to private interface: eth0</li>
+  <li>Public: bridged to public interface: eth1</li>
+</ul>
+
+<p>Use the VMware vSphere client for the following task:</p>
+
+<ul>
+  <li>Click File &gt; New &gt; Virtual Machine</li>
+  <li>Configuration: Custom</li>
+  <li>Name: win7</li>
+  <li>Datastore: datastore</li>
+  <li>Virtual Machine Version: 7</li>
+  <li>Guest Operating System: Windows
+    <ul>
+      <li>Version: Microsoft Windows 7 (32-bit)</li>
+    </ul>
+  </li>
+  <li>Number of virutal sockets: 1</li>
+  <li>Number of cores per virtual socket: 1</li>
+  <li>Memory Size: 4 GB</li>
+  <li>How many Nics: 2
+    <ul>
+      <li>NIC 1: Private, Adapter: E1000, Connect at Power On: Yes</li>
+      <li>NIC 2: Public, Adapter: E1000, Connect at Power On: Yes</li>
+    </ul>
+  </li>
+  <li>SCSI controller: LSI Logic SAS</li>
+  <li>Disk: Create a new virtual disk
+    <ul>
+      <li>Capacity: 24 GB</li>
+      <li>Disk Provisioning: Thin Provision</li>
+      <li>Location: Specify a datastore or datastore cluster
+        <ul>
+          <li>Click Browse</li>
+          <li>Select the local datastore</li>
+          <li>Click OK</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Virtual Device Node: SCSI (0:0)
+    <ul>
+      <li>Mode: Not Independent (unchecked)</li>
+    </ul>
+  </li>
+  <li>Edit the virtual machine settings before completion: Yes</li>
+  <li>In the Hardware pane, select Add…
+    <ul>
+      <li>Device Type: CD/DVD Drive</li>
+      <li>Select CD/DVD Media: Use ISO image</li>
+      <li>Select ISO Image:
+        <ul>
+          <li>Click Browse</li>
+          <li>Select the location datastore (were the ISO is located)</li>
+          <li>Click Open</li>
+          <li>Select Windows7-SP1-32.ISO</li>
+          <li>Click Open</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Connect at power on: Yes (checked)</li>
+  <li>Select the New NIC (adding) entry with Private listed next to it** Under MAC Address, select Manual
+    <ul>
+      <li>Enter the private MAC address you retrieved earlier</li>
+      <li>Click Finish</li>
+    </ul>
+  </li>
+  <li>Click Finish.</li>
+</ul>
+
+<h3 id="start-the-vm-and-install-windows">Start the VM and Install Windows</h3>
+
+<ul>
+  <li>Select the win7 VM</li>
+  <li>Click the play button to power on the VM</li>
+  <li>View the Console tab to watch the VM boot
+wait for?</li>
+  <li>Enter the regional information:
+    <ul>
+      <li>Language to install: English</li>
+      <li>Time and currency format: English (United States)</li>
+      <li>Keyboard or input method: US</li>
+    </ul>
+  </li>
+  <li>Click Next</li>
+  <li>
+    <p>Click Install now</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  Setup is starting...
+</code></pre></div>    </div>
+  </li>
+  <li>Click the checkbox next to “I accept the license terms”</li>
+  <li>Click Next</li>
+  <li>Click Custom (advanced)</li>
+  <li>Where do you want to install Windows?: Disk 0 Unallocated Space</li>
+  <li>
+    <p>Click Next</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  Installing Windows...
+  Windows restarts
+  Starting Windows
+  Setup is updating registry settings
+</code></pre></div>    </div>
+  </li>
+  <li>A screen titled “Set Up Windows” appears:
+    <ul>
+      <li>Type a user name: root</li>
+      <li>Type a computer name: it’s best to name the computer after the OS (Example: win7sp1)</li>
+    </ul>
+  </li>
+  <li>Enter a password, password hint, and click Next</li>
+  <li>Help protect your computer and improve Windows automatically: Ask me later</li>
+  <li>
+    <p>Select a time zone, set the correct time, and click Next</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  Windows is finalizing your settings
+  Preparing your desktop
+  Desktop appears
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>If asked to set a network location, choose Work network</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  The root account logs in...
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="enable-rdp">Enable RDP</h3>
+
+<ul>
+  <li>Open Control Panel &gt; System and Security &gt; System</li>
+  <li>Click Remote settings</li>
+  <li>Select Allow connections from computers running any version of Remote Desktop (less secure)</li>
+  <li>Click OK</li>
+</ul>
+
+<p>Use an RDP client to connect to the Windows computer using either its public or private IP address as appropriate.</p>
+
+<h3 id="connect-via-rdp">Connect via RDP</h3>
+
+<ul>
+  <li>Find the IP address assigned to your VM on the Public port:
+    <ul>
+      <li>Start-&gt;Search</li>
+      <li>Enter cmd</li>
+      <li>Run cmd</li>
+      <li>type ipconfig and look your public IPv4 address x.x.x.x address</li>
+    </ul>
+  </li>
+  <li>Connect to the Windows 7 computer using RDP</li>
+  <li>Login to the RDP session as root</li>
+</ul>
+
+<h3 id="disable-user-account-control">Disable User Account Control</h3>
+
+<p>User Account Control (UAC) is the mechanism that causes may of the pop-up windows to appear when you attempt to run programs on Windows 7 and Windows Server 2008. VCL will disable it when the image is captured but you can disable it while configuring the base image to make things a little easier.</p>
+
+<ul>
+  <li>Open the Control Panel</li>
+  <li>Click System and Security &gt; Change User Account Control settings (Under Action Center)</li>
+  <li>Move the slider to the bottom: Never notify</li>
+  <li>Click OK</li>
+  <li>Reboot the computer</li>
+</ul>
+
+<h3 id="vmware-only-install-vmware-tools"><em>VMware Only:</em> Install VMware Tools</h3>
+<ol>
+  <li>Power on the VM if it is not already powered on</li>
+  <li>Install VMWare Tools  (Note: you must have a CD-ROM drive configured for the VM in order to install VMware Tools)
+    <ul>
+      <li>Click on the VM menu and select “Install VMWare Tools”</li>
+      <li>Select Typical and proceed through the setup pages accepting the defaults</li>
+      <li>Reboot the VM when installation is complete</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="install-cygwin-sshd">Install Cygwin SSHD</h3>
+
+<h4 id="run-vcld--setup">Run vcld -setup</h4>
+
+<ol>
+  <li>
+    <p>Run the following command on the management node:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     /usr/local/vcl/bin/vcld -setup
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Navigate the menu options</p>
+
+    <p>(Note: the names and numbers of the menu items may not match your installation):</p>
+
+    <ol>
+      <li>
+        <p>Select a module to configure: VCL Image State Module</p>
+      </li>
+      <li>
+        <p>Choose an operation: Capture Base Image</p>
+      </li>
+      <li>
+        <p>Enter the VCL login name or ID of the user who will own the image:</p>
+
+        <p>Enter your VCL user ID or the user ID of the user you want to own the image.  Pressing Enter without entering a user login ID will cause admin to be the owner of the new base image.</p>
+      </li>
+      <li>
+        <p>Enter the hostname or IP address of the computer to be captured:</p>
+
+        <p>Enter the name or private IP address of the computer which has already added to the VCL database.</p>
+      </li>
+      <li>
+        <p>Select the OS to be captured:</p>
+
+        <ol>
+          <li>VMware Linux</li>
+          <li>VMware Windows 2003 Server</li>
+          <li>VMware Windows 7</li>
+          <li>VMware Windows Server 2008</li>
+          <li>VMware Windows Vista</li>
+          <li>VMware Windows XP</li>
+        </ol>
+      </li>
+      <li>
+        <p>Image architecture:</p>
+
+        <ol>
+          <li>x86</li>
+          <li>x86_64</li>
+        </ol>
+      </li>
+      <li>
+        <p>Use Sysprep:</p>
+
+        <ol>
+          <li>Yes</li>
+          <li>No</li>
+        </ol>
+
+        <p>Sysprep is usually only required if the image will be loaded on bare metal computers with varying different hardware.</p>
+      </li>
+      <li>
+        <p>Enter the name of the image to be captured:</p>
+
+        <p>The name you enter is the name that will be displayed in the list of environments.  It may contain spaces but including other special characters is not recommended.</p>
+      </li>
+    </ol>
+  </li>
+</ol>
+
+<p>The following happens once you enter an image name and press enter:</p>
+
+<ul>
+  <li>
+    <p>A new image is added to the VCL database</p>
+  </li>
+  <li>
+    <p>An imaging request is added to the VCL database</p>
+  </li>
+  <li>
+    <p>The vcld -setup automatically initiates ‘tail -f /var/log/vcld.log’ to monitor the vcld log file.  The output should be displayed on the screen.</p>
+  </li>
+</ul>
+
+<p>Watch the vcld logfile output to determine if the image capture process is successful or terminated because a problem occurred.  When the capture process terminates, there will either be a message near the end of the output saying “image capture successful” or there will be several WARNING messages, the last of which says something to the effect “image failed to be captured”.  Further troubleshooting is required if the image fails to be captured.</p>
+
+<h3 id="add-the-base-image-to-an-image-group">Add the Base Image to an Image Group</h3>
+
+<p>The vcld -setup utility does not add the new base image to any image groups.  You must add the image to an image group using the VCL website after the image capture process is complete.  Reservations for the image cannot be made until this is done.  To add the image to an image group, browse to the VCL website and select Manage Images &gt; Edit Image Grouping.</p>
 
 
       
