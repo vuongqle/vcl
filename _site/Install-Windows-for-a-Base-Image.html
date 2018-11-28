@@ -19,7 +19,7 @@
 {"url":"http://localhost:4000/Install-Windows-for-a-Base-Image.html","headline":"Install Windows for a Base Image","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=b1dabfe1dd065c9b6400dde1c420b4e034217778">
+    <link rel="stylesheet" href="/assets/css/style.css?v=e1b3d16dd02a13ce52fe1822db9f1f034272749a">
   </head>
   <body>
     <div class="container-lg px-3 my-5 markdown-body">
@@ -63,6 +63,83 @@
   <li>Click Select Image and click the arrow button to the right of it</li>
   <li>Navigate to the Windows installation ISO file which was saved to the management node and click Open</li>
   <li>Click Mount All</li>
+</ol>
+
+<h3 id="boot-to-the-windows-installation-cd-or-dvd">Boot to the Windows Installation CD or DVD</h3>
+<ol>
+  <li>Power on the computer</li>
+  <li>Press the key to display the boot menu as soon as the computer’s POST screen is displayed (usually F12 for bare metal blades or ESC for VMware)</li>
+  <li>Boot from the CD-ROM drive</li>
+  <li>Press a key to boot from the CD (this may be displayed at bottom of screen as soon as the computer begins to boot)</li>
+</ol>
+
+<h3 id="install-windows">Install Windows</h3>
+
+<p>The Windows installation sequence varies by version. The next 2 sections describe the recommended answers for Windows XP and Windows 7.</p>
+
+<h4 id="windows-xp-installation">Windows XP Installation</h4>
+
+<ol>
+  <li>Press Enter to setup up Windows XP now</li>
+  <li>Press F8 to agree to the license agreement</li>
+  <li>Configure the Windows partition
+    <ol>
+      <li>Press Enter to set up Windows XP on the selected item (should be called “Unpartitioned space”)</li>
+      <li>Format the partition using the NTFS file system (Quick)</li>
+    </ol>
+  </li>
+  <li>Region and Language Options - click Next</li>
+  <li>Name: VCL</li>
+  <li>Organization: Apache.org</li>
+  <li>Enter your Windows XP product key</li>
+  <li>Computer name: (doesn’t matter)</li>
+  <li>Administrator password: (doesn’t matter, but it’s recommended that password should match the WINDOWS_ROOT_PASSWORD setting in /etc/vcl/vcld.conf)</li>
+  <li>Select the timezone</li>
+  <li>Networking settings: Typical</li>
+  <li>Member of a domain: No, leave default workgroup settings</li>
+  <li>Automatic updates: Not right now</li>
+  <li>Connect to Internet: Skip</li>
+  <li>Register: no</li>
+  <li>
+    <p>User name: root</p>
+
+    <p><em>Windows XP setup should finish and the root account created during installation should automatically log on</em></p>
+  </li>
+  <li>
+    <p>Once the desktop appears, set root’s password via the Windows GUI or by executing the following command from a command prompt:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   net user root &lt;password&gt;
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="windows-7-installation">Windows 7 Installation</h3>
+
+<ol>
+  <li>Enter the regional information:
+    <ol>
+      <li>Language to install: English</li>
+      <li>Time and currency format: English (United States)</li>
+      <li>Keyboard or input method: US</li>
+    </ol>
+  </li>
+  <li>Click Next</li>
+  <li>
+    <p>Click Install now</p>
+
+    <p><em>Setup is starting…</em></p>
+  </li>
+  <li>Click the checkbox next to “I accept the license terms”</li>
+  <li>Click Next</li>
+  <li>Click Custom (advanced)</li>
+  <li>On the “Where do you want to install Windows?” page, delete all existing partitions and create a new partition using all of the available space:
+    <ol>
+      <li>Click Drive options (advanced)</li>
+      <li>Click Delete, then click OK to confirm</li>
+      <li>Click New</li>
+      <li>Click Apply (the size should be set to the maximum amount available</li>
+    </ol>
+  </li>
 </ol>
 
 

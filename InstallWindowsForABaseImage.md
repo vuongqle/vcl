@@ -35,3 +35,61 @@ Note: these instructions assume a VM has already been created
 10. Click Select Image and click the arrow button to the right of it
 11. Navigate to the Windows installation ISO file which was saved to the management node and click Open
 12. Click Mount All
+
+### Boot to the Windows Installation CD or DVD
+1. Power on the computer
+2. Press the key to display the boot menu as soon as the computer's POST screen is displayed (usually F12 for bare metal blades or ESC for VMware)
+3. Boot from the CD-ROM drive
+4. Press a key to boot from the CD (this may be displayed at bottom of screen as soon as the computer begins to boot)
+
+
+### Install Windows
+
+The Windows installation sequence varies by version. The next 2 sections describe the recommended answers for Windows XP and Windows 7.
+
+#### Windows XP Installation
+
+1. Press Enter to setup up Windows XP now
+2. Press F8 to agree to the license agreement
+3. Configure the Windows partition
+    1. Press Enter to set up Windows XP on the selected item (should be called "Unpartitioned space")
+    2. Format the partition using the NTFS file system (Quick)
+4. Region and Language Options - click Next
+5. Name: VCL
+6. Organization: Apache.org
+7. Enter your Windows XP product key
+8. Computer name: (doesn't matter)
+9. Administrator password: (doesn't matter, but it's recommended that password should match the WINDOWS_ROOT_PASSWORD setting in /etc/vcl/vcld.conf)
+10. Select the timezone
+11. Networking settings: Typical
+12. Member of a domain: No, leave default workgroup settings
+13. Automatic updates: Not right now
+14. Connect to Internet: Skip
+15. Register: no
+16. User name: root
+
+    *Windows XP setup should finish and the root account created during installation should automatically log on*
+
+17.  Once the desktop appears, set root's password via the Windows GUI or by executing the following command from a command prompt:
+
+            net user root <password>
+
+### Windows 7 Installation
+
+1. Enter the regional information:
+    1. Language to install: English
+    2. Time and currency format: English (United States)
+    3. Keyboard or input method: US
+2. Click Next
+3. Click Install now
+
+    *Setup is starting...*
+    
+4. Click the checkbox next to "I accept the license terms"
+5. Click Next
+6. Click Custom (advanced)
+7. On the "Where do you want to install Windows?" page, delete all existing partitions and create a new partition using all of the available space:
+    1. Click Drive options (advanced)
+    2. Click Delete, then click OK to confirm
+    3. Click New
+    4. Click Apply (the size should be set to the maximum amount available
