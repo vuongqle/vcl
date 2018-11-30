@@ -19,7 +19,7 @@
 {"url":"http://localhost:4000/Install-Windows-for-a-Base-Image.html","headline":"Install Windows for a Base Image","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=e1b3d16dd02a13ce52fe1822db9f1f034272749a">
+    <link rel="stylesheet" href="/assets/css/style.css?v=f0cdf2b853049824893b25bb35700dc043cffc8a">
   </head>
   <body>
     <div class="container-lg px-3 my-5 markdown-body">
@@ -424,7 +424,23 @@ Start &gt; All Programs &gt; Accessories &gt; right-click Command prompt &gt; Ru
 
 <p>During the image capture process, the Windows* directories that pertain to the OS being captured are copied to C:\cygwin\home\root\VCL on the Windows computer.  Each Windows* directory is overlayed into the same VCL directory.  They are copied in the order listed above, from most general to most specific. For example, if a Windows Server 2008 image is being captured the directories copied are:</p>
 
-<p>\v</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    /usr/local/vcl/tools/Windows
+
+    /usr/local/vcl/tools/Windows_Version_6
+
+    /usr/local/vcl/tools/Windows_Server_2008
+</code></pre></div></div>
+
+<p>The directory organization under each Drivers directory does not matter.  However, it’s recommended that they be organized by device type:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    /usr/local/vcl/tools/Windows.../Drivers/Chipset
+
+    /usr/local/vcl/tools/Windows.../Drivers/Network
+
+    /usr/local/vcl/tools/Windows.../Drivers/Storage
+
+    /usr/local/vcl/tools/Windows.../Drivers/Video
+</code></pre></div></div>
 
 
       

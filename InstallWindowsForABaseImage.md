@@ -303,4 +303,18 @@ There are multiple Windows... directories under /usr/local/vcl/tools. The names 
 
 During the image capture process, the Windows* directories that pertain to the OS being captured are copied to C:\cygwin\home\root\VCL on the Windows computer.  Each Windows* directory is overlayed into the same VCL directory.  They are copied in the order listed above, from most general to most specific. For example, if a Windows Server 2008 image is being captured the directories copied are:
 
-\v
+        /usr/local/vcl/tools/Windows
+
+        /usr/local/vcl/tools/Windows_Version_6
+
+        /usr/local/vcl/tools/Windows_Server_2008
+
+The directory organization under each Drivers directory does not matter.  However, it's recommended that they be organized by device type:
+
+        /usr/local/vcl/tools/Windows.../Drivers/Chipset
+
+        /usr/local/vcl/tools/Windows.../Drivers/Network
+
+        /usr/local/vcl/tools/Windows.../Drivers/Storage
+
+        /usr/local/vcl/tools/Windows.../Drivers/Video
