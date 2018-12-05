@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Install and Configure Cygwin SSHD | vcl</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Install and Configure Cygwin SSHD" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<meta property="og:description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<link rel="canonical" href="http://localhost:4000/Install-and-Configure-Cygwin-SSHD.html" />
+<meta property="og:url" content="http://localhost:4000/Install-and-Configure-Cygwin-SSHD.html" />
+<meta property="og:site_name" content="vcl" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/Install-and-Configure-Cygwin-SSHD.html","headline":"Install and Configure Cygwin SSHD","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=f0cdf2b853049824893b25bb35700dc043cffc8a">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+
+      <h1><a href="http://localhost:4000/">Install and Configure Cygwin SSHD</a></h1> 
+
+
+      <p>The Cygwin SSHD service must be installed on a Windows base image. It allows the management node to login to the computer in order to configure it and to perform periodic checks.</p>
+
+<h3 id="install-cygwin">Install Cygwin</h3>
+
+<h4 id="apache-vcl-current-version">Apache VCL current version</h4>
+
+<p>Log on to the Windows computer being used for the VCL image as root</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* The scripts included with the Apache VCL source code which configure the Cygwin sshd service will likely fail if you install Cygwin while logged in as a user other than root. ~~~ delete after dis ~~~
+</code></pre></div></div>
+
+<p>Download the Cygwin installer to the desktop:</p>
+
+<p>32 bit http://cygwin.com/setup-x86.exe</p>
+
+<p>setup-x86.exe or setup-x86_64.exe</p>
+
+<p>If running a newer version of Windows which includes User Account Control (UAC), be sure to either disable UAC and reboot before installing Cygwin or right-click setup.exe and select Run as Administrator</p>
+
+<p>Configure as follows:
+Select Install from Internet
+Root Directory: C:\cygwin
+Install For: All Users
+Local Package Directory: browse to root’s desktop
+Internet Connection: Direct Connection
+Download Site: choose a site close to your location (.edu FTP sites seem the fastest)
+If presented with a “Setup Alert - This is the first time you’ve installed Cygwin 1.7.x” window, click OK
+Select Packages (expand the tree and click Skip):
+Editors : vim
+Net: openssh
+Web: wget
+Utils: dos2unix
+Select required packages: checked
+Create icon on Desktop: Yes
+Add icon to Start Menu: No
+Click Finish
+Apache VCL 2.2 and Earlier
+Log on to the Windows computer being used for the VCL image as root</p>
+
+<p>The scripts included with the Apache VCL source code which configure the Cygwin sshd service will likely fail if you install Cygwin while logged in as a user other than root.</p>
+
+<p>Download the Cygwin 1.5.x installer to the desktop: http://cygwin.com/setup-legacy.exe</p>
+
+<p>WARNING: Do not download and install Cygwin 1.7 unless you are running Apache VCL 2.2.1 or later. Changes have been made to Cygwin 1.7 which will cause VCL reservations to fail.</p>
+
+<p>Run the Cygwin installer:</p>
+
+<p>setup-legacy.exe</p>
+
+<p>If running a newer version of Windows which includes User Account Control (UAC), be sure to either disable UAC and reboot before installing Cygwin or right-click setup.exe and select Run as Administrator</p>
+
+<p>Click OK if presented with a legacy version warning
+Configure as follows:
+Install from Internet
+Root Directory: C:\cygwin
+Install For: Just Me
+Default Text File Type: DOS/text
+Local Package Directory: browse to root’s Desktop
+Internet Connection: Direct Connection
+Download Site: choose one (.edu FTP sites seem the fastest)
+Select Packages (expand the tree and click Skip):
+Editors : vim
+Net: openssh
+Web: wget
+Create icon on Desktop: No
+Add icon to Start Menu: No
+Verify that Cygwin was successfully installed
+There is a bug in the Cygwin 1.5 installer which causes the installation to fail.  You may see a Postinstall script errors panel after the installation has finished.  When Cygwin fails to install properly, most of its executable files are not properly copied to the C:\cygwin\bin directory.
+Open Windows Explorer and navigate to C:\cygwin\bin
+Check the number of files listed in this directory
+There should be many files listed in this directory – usually over 300.  If you only see a few files then Cygwin did not install properly. For some reason, Cygwin usually installs correctly the 2nd time the the installation is done. Do the following if you are presented with the Postinstall script errors panel at the end of the Cywin installation or if the C:\cygwin\bin directory is incomplete:
+Close the Cygwin installer
+Delete C:\cygwin
+Repeat the installation steps listed above
+Verify that Cygwin was installed properly again
+Configure the Cygwin Desktop Shortcut
+It is useful to have a Cygwin shortcut on root’s desktop. The Cygwin installer creates the desktop icon in the shared desktop folder for all users meaning it will appear on the desktop when users make reservations for the image. This is not recommended. Move the shortcut from the shared desktop folder to root’s desktop folder:</p>
+
+<p>Newer versions of Windows (Windows 7, Windows Server 2008):
+C:\Users\Public\Desktop\Cygwin.lnk &gt; C:\Users\root\Desktop\Cygwin.lnk
+Older versions of Windows (Windows XP, Windows Server 2003):
+C:\Documents and Settings\All Users\Desktop\Cygwin.lnk &gt; C:\Documents and Settings\root\Desktop\Cygwin.lnk
+Delete the Installation Files
+After Cywgin installation is complete, delete the installation files from the desktop:</p>
+
+<p>Installer: setup-legacy.exe
+Local package directory: C:\ftp%…cygwin…
+Configure the Cygwin SSHD Service
+Launch the Cygwin shortcut on the desktop</p>
+
+<p>If running a newer version of Windows which includes User Account Control (UAC), be sure to either disable UAC and reboot before launching the Cygwin shortcut or right-click the Cygwin shortcut and select Run as Administrator</p>
+
+<p>Download cygwin-sshd-config.sh using wget to root’s Cygwin home directory on the Windows computer:
+C:\Cygwin\home\root\cygwin-sshd-config.sh</p>
+
+<p>wget https://raw.githubusercontent.com/apache/vcl/master/managementnode/bin/cygwin-sshd-config.sh</p>
+
+<p>Set the script to be executable:</p>
+
+<p>chmod +x cygwin-sshd-config.sh</p>
+
+<p>Fix Cygwin 1.7 issue:</p>
+
+<p>sed -i -e ‘s/^ssh-host-config.*/ssh-host-config -y -c “nodosfilewarning ntsec” -w “$PASSWORD”/’ cygwin-sshd-config.sh</p>
+
+<p>Run the script and specify the root account password as an argument, enclose the password in single quotes in case special characters are used in the password:</p>
+
+<p>./cygwin-sshd-config.sh ‘PASSWORD’</p>
+
+<p>If asked to enter a new user name, enter root
+If asked to enter a password, enter the password set for the Windows root user. This is the same password entered as the cygwin-sshd-config.sh argument.
+You should see something similar to the following towards then end of the script output:</p>
+
+<p>The CYGWIN sshd service was started successfully.</p>
+
+<p>Configure SSH Identity Key Access from the Management Node
+Log in as root on the management node
+Download gen-node-key.sh using wget to the management node:</p>
+
+<p>wget http://svn.apache.org/repos/asf/vcl/trunk/managementnode/bin/gen-node-key.sh</p>
+
+<p>Set the script to executable:</p>
+
+<p>chmod +x gen-node-key.sh</p>
+
+<p>Determine the IP address of the Windows computer by running ipconfig
+Run the script on the managment node and specify the Windows computer’s IP address or hostname as the 1st argument. A second argument specifying the private SSH key path can be specified. If the 2nd argument isn’t specified, /etc/vcl/vcl.key will be used.</p>
+
+<p>./gen-node-key.sh 10.10.18.179</p>
+
+<p>Enter the Windows root account password during script execution when asked
+Attempt to connect from the management node to the Windows computer via SSH using the command displayed at the end of the gen-node-key.sh output</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/pathoma4/vcl/edit/gh-pages/InstallandConfigureCygwinSSHD.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>
