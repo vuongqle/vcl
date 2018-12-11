@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Capture a Base Image | vcl</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Capture a Base Image" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<meta property="og:description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<link rel="canonical" href="http://localhost:4000/Capture-A-Base-Image.html" />
+<meta property="og:url" content="http://localhost:4000/Capture-A-Base-Image.html" />
+<meta property="og:site_name" content="vcl" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/Capture-A-Base-Image.html","headline":"Capture a Base Image","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=2eac47dc846b94f7e79c89ca58f99f64d2fd1fcb">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+
+      <h1><a href="http://localhost:4000/">Capture a  Base Image</a></h1> 
+
+
+      <h3 id="run-vcld--setup">Run vcld -setup</h3>
+<ol>
+  <li>
+    <p>Run the following command on the management node:
+     /usr/local/vcl/bin/vcld -setup</p>
+  </li>
+  <li>
+    <p>Navigate the menu options</p>
+
+    <p>(Note: the names and numbers of the menu items may not match your installation):</p>
+
+    <ol>
+      <li>Select a module to configure: <strong>VCL Image State Module</strong></li>
+      <li>Choose an operation: <strong>Capture Base Image</strong></li>
+      <li>
+        <p>Enter the VCL login name or ID of the user who will own the image:</p>
+
+        <p>Enter your VCL user ID or the user ID of the user you want to own the image.  Pressing Enter without entering a user login ID will cause admin to be the owner of the new base image.</p>
+      </li>
+      <li>
+        <p>Enter the hostname or IP address of the computer to be captured:</p>
+
+        <p>Enter the name or private IP address of the computer which has already added to the VCL database.</p>
+      </li>
+      <li>Select the OS to be captured:
+        <ol>
+          <li>VMware Linux</li>
+          <li>VMware Windows 2003 Server</li>
+          <li>VMware Windows 7</li>
+          <li>VMware Windows Server 2008</li>
+          <li>VMware Windows Vista</li>
+          <li>VMware Windows XP</li>
+        </ol>
+      </li>
+      <li>Image architecture:
+        <ol>
+          <li>x86</li>
+          <li>x86_64</li>
+        </ol>
+      </li>
+      <li>Use Sysprep:
+        <ol>
+          <li>Yes</li>
+          <li>
+            <p>No</p>
+
+            <p>Sysprep is usually only required if the image will be loaded on bare metal computers with varying different hardware.</p>
+          </li>
+          <li>
+            <p>Enter the name of the image to be captured:</p>
+
+            <p>The name you enter is the name that will be displayed in the list of environments.  It may contain spaces but including other special characters is not recommended.</p>
+          </li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+</ol>
+
+<p>The following happens once you enter an image name and press enter:</p>
+
+<ul>
+  <li>A new image is added to the VCL database</li>
+  <li>An imaging request is added to the VCL database</li>
+  <li>The vcld -setup automatically initiates ‘tail -f /var/log/vcld.log’ to monitor the vcld log file.  The output should be displayed on the screen.</li>
+</ul>
+
+<p>Watch the vcld logfile output to determine if the image capture process is successful or terminated because a problem occurred.  When the capture process terminates, there will either be a message near the end of the output saying “image capture successful” or there will be several WARNING messages, the last of which says something to the effect “image failed to be captured”.  Further troubleshooting is required if the image fails to be captured.</p>
+
+<h3 id="add-the-base-image-to-an-image-group">Add the Base Image to an Image Group</h3>
+
+<p>The vcld -setup utility does not add the new base image to any image groups.  You must add the image to an image group using the VCL website after the image capture process is complete.  Reservations for the image cannot be made until this is done.  To add the image to an image group, browse to the VCL website and select Manage Images &gt; Edit Image Grouping.</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/pathoma4/vcl/edit/gh-pages/CaptureABaseImage.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

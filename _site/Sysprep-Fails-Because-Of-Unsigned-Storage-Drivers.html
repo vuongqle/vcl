@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Sysprep Fails Because of Unsigned Storage Drivers | vcl</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Sysprep Fails Because of Unsigned Storage Drivers" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<meta property="og:description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<link rel="canonical" href="http://localhost:4000/Sysprep-Fails-Because-Of-Unsigned-Storage-Drivers.html" />
+<meta property="og:url" content="http://localhost:4000/Sysprep-Fails-Because-Of-Unsigned-Storage-Drivers.html" />
+<meta property="og:site_name" content="vcl" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/Sysprep-Fails-Because-Of-Unsigned-Storage-Drivers.html","headline":"Sysprep Fails Because of Unsigned Storage Drivers","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=2eac47dc846b94f7e79c89ca58f99f64d2fd1fcb">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+
+      <h1><a href="http://localhost:4000/">Sysprep Fails Because of Unsigned Storage Drivers</a></h1> 
+
+
+      <p>Sysprep may fail if mass storage drivers are not signed.  This problem occurs even if the sysprep.inf file is configured with DriverSigningPolicy=Ignore.  This is a known problem with some versions of LSI SAS drivers (1.30.02.00) used on IBM blades.  The driver available from LSI’s website is not correctly signed.  The same version is available from IBM’s website and is correctly signed.  It can be downloaded from:</p>
+
+<p><a href="https://www.ibm.com/it-infrastructure">(Critical update) IBM and LSI Basic or Integrated RAID SAS driver v1.30.02.00 for Microsoft Windows Server 2008 and Windows Server 2003 - IBM BladeCenter and System x</a></p>
+
+<h3 id="how-to-tell-if-this-problem-occurred">How to Tell if this Problem Occurred</h3>
+
+<p>Open C:\Windows\setupapi.log.  Look for lines containing “An unsigned or incorrectly signed file”:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    [2009/10/21 10:52:43 1912.7 Driver Install]
+    #-019 Searching for hardware ID(s): pci\ven_1000&amp;dev_0622
+    #-199 Executing "C:\Sysprep\sysprep.exe" with command line: C:/Sysprep/sysprep.exe /quiet /reseal /mini
+    #I022 Found "PCI\VEN_1000&amp;DEV_0622" in c:\cygwin\home\root\vcl\drivers\storage\lsi-sas\symmpi.inf; Device: "LSI Adapter, 2Gb FC, models 44929, G2 with 929"; Driver: "LSI Adapter, 2Gb FC, models 44929, G2 with 929"; Provider: "LSI Corporation"; Mfg: "LSI Corporation"; Section name: "SYMMPI_Inst".
+    #I087 Driver node not trusted, rank changed from 0x00000000 to 0x0000c000.
+    #I023 Actual install section: [SYMMPI_Inst]. Rank: 0x0000c000. Effective driver date: 01/30/2009.
+    #-166 Device install function: DIF_SELECTBESTCOMPATDRV.
+    #I063 Selected driver installs from section [SYMMPI_Inst] in "c:\cygwin\home\root\vcl\drivers\storage\lsi-sas\symmpi.inf".
+    #I320 Class GUID of device remains: {4D36E97B-E325-11CE-BFC1-08002BE10318}
+    #I060 Set selected driver.
+    #I058 Selected best compatible driver.
+    #-124 Doing copy-only install of "ROOT\SYSPREP_TEMPORARY\0000".
+    #E358 An unsigned or incorrectly signed file "c:\cygwin\home\root\vcl\drivers\storage\lsi-sas\mpixp32.cat" for driver "LSI Adapter, 2Gb FC, models 44929, G2 with 929" blocked (server install). Error 0x800b0003: The form specified for the subject is not one supported or known by the specified trust provider.
+    #W187 Install failed, attempting to restore original files.
+</code></pre></div></div>
+
+<h3 id="how-to-resolve-this-problem">How to Resolve this Problem</h3>
+<p>The preferred method is to obtain a signed driver.  If a signed driver cannot be located, try configuring the local computer policy to allow unsigned drivers:</p>
+
+<ul>
+  <li>Run: gpedit.msc</li>
+  <li>Navigate to: Computer Configuration &gt; Windows Settings &gt; Security Options</li>
+  <li>Edit: Devices: Unsigned driver installation behavior = Silently succeed</li>
+  <li>Run: gpupdate /force</li>
+</ul>
+
+<p>Restart the image capture.</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/pathoma4/vcl/edit/gh-pages/SysprepFailsBecauseOfUnsignedStorageDrivers.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>
