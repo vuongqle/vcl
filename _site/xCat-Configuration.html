@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>xCat Configuration | vcl</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="xCat Configuration" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<meta property="og:description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<link rel="canonical" href="http://localhost:4000/xCat-Configuration.html" />
+<meta property="og:url" content="http://localhost:4000/xCat-Configuration.html" />
+<meta property="og:site_name" content="vcl" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/xCat-Configuration.html","headline":"xCat Configuration","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=b671feb74595371c5de420586c58c64f729bf89f">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+
+      <h1><a href="http://localhost:4000/">xCat Configuration</a></h1> 
+
+
+      <h2 id="variable-table-configuration-options">Variable Table Configuration Options</h2>
+
+<p>There are a few xCAT options which may be configured using the variable table in the database.  At the current time, these must be configured manually using a database query or phpMyAdmin.</p>
+
+<p>Each of the following variables may be configured for a specific management node or globally.  To configure a variable for a specific management node, the exact value of the hostname column in the managementnode table must be appended to the variable.name value.  If both the global and management node specific variables are configured, the one configured for a specific managment node takes precedence.</p>
+
+<h2 id="concurrent-load-throttle">Concurrent Load Throttle</h2>
+
+<p>Controls the maximum number of compute nodes which may be loading at the same time.  When a new or reload reservation is processed, this variable is checked before the compute node reload is started.  If this variable is not set in the database, a default value of 10 is used.</p>
+
+<p>The xCAT.pm module calls nodeset to retrieve the status of all of the nodes controlled by the management node and then counts how many have their status set to either ‘install’ or ‘image’.  For each of these compute nodes, the code checks whether there is an running vcld process for that compute node.  The nodes are not considered against the load throttle limit if there is no process running.  If the total number of nodes is greater than or equal to the throttle limit, the reservation will wait up to 30 minutes for existing loading nodes to finish.  Once the actively loading node count is less than the throttle limit, the waiting reservation proceeds to begin its load process.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><strong>variable.name:</strong></td>
+      <td><strong>xcat \ throttle \ managementnode.hostname</strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><strong>xcat \ throttle</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="xcat-command-timeout-limit">xCAT Command Timeout Limit</h2>
+
+<p>The xCAT utilities will occasionally fail and display a timeout error message under some circumstances, especially when several compute nodes are being loaded concurrently.  This is a normal error.  Making subsequent attempts to run the command usually succeeds.  This variable controls how may timeout errors may occur before the xCAT.pm module gives up.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><strong>variable.name:</strong></td>
+      <td><strong>xcat \ timeout_error_limit \ managementnode.hostname</strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><strong>xcat \ timeout_error_limit</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="rpower-error-limit">rpower Error Limit</h2>
+
+<p>xCAT’s rpower command fails more often than most other commands.  This variable controls how many consecutive rpower errors may occur before giving up.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><strong>variable.name:</strong></td>
+      <td><strong>xcat \ rpower_error_limit \ managementnode.hostname</strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><strong>xcat \ rpower_error_limit</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>
