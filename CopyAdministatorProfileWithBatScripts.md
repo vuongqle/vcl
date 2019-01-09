@@ -1,6 +1,6 @@
 ---
 title: Copy Administator Profile With Bat Scripts
-last_updated: Jan 08, 2019
+last_updated: Jan 09, 2019
 sidebar: mydoc_sidebar
 permalink: copy-administator-profile-with-bat-scripts.html
 ---

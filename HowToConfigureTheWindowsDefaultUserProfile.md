@@ -1,6 +1,6 @@
 ---
 title: How to Configure the Windows Default User Profile
-last_updated: Jan 08, 2019
+last_updated: Jan 09, 2019
 sidebar: mydoc_sidebar
 permalink: How-to-Configure-the-Windows-Default-User-Profile.html
 ---
