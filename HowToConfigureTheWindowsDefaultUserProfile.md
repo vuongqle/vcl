@@ -14,12 +14,11 @@ A Windows user profile defines the look and feel of the desktop environment conf
     * [Copy the Customized Profile to Default](#copy-the-customized-profile-to-default)
     * [Clean the Registry for the Customized Profile](#clean-the-registry-for-the-customized-profile)
     * [Configure the User Account Picture (Optional)](#configure-the-user-account-picture-optional)
-    * [Force the Desktop Background to Appear on Windows 7 & Windows Server 2008 (Optional)](#force-the-desktop-background-to-appear-on-windows-7--windows-server-2008-optional
-        )
-* [Windows XP and Windows Server 2003](#windowsxpandwindowsserver2003)
-    * [Create a Profile Configuration Account](#createaprofileconfigurationaccount)
-    * [Copy the Customized Profile to "Default User"](#copythecustomizedprofiletodefaultuser)
-    * [Clean up the Profile Configuration Account](cleanuptheprofileconfigaccount)
+    * [Force the Desktop Background to Appear on Windows 7 & Windows Server 2008 (Optional)](#force-the-desktop-background-to-appear-on-windows-7--windows-server-2008-optional)
+* [Windows XP and Windows Server 2003](#windows-xp-and-windows-server-2003)
+    * [Create a Profile Configuration Account](#create-a-profile-configuration-account)
+    * [Copy the Customized Profile to "Default User"](#copy-the-customized-profile-to-default-user)
+    * [Clean up the Profile Configuration Account](#clean-up-the-profile-configuration-account)
 
 ## Windows 7 and Windows Server 2008
 
@@ -178,7 +177,7 @@ You may encounter difficulty getting the wallpaper to be displayed under all sit
         reg.exe ADD "HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Desktop\General" /v WallpaperSource /d "%WALLPAPER_PATH%" /f
 
 7. Save the .cmd file
-8. Click the Add... button on the Logon Properites pane:
+8. Click the Add... button on the Logon Properties pane:
 
     <img src="images/add-logon-script.png" width="400" border="1">
 
@@ -191,3 +190,33 @@ You may encounter difficulty getting the wallpaper to be displayed under all sit
 12. Click OK twice
 13. Close the Local Group Policy Editory
 14. Run gpupdate.exe /force
+
+## Windows XP and Windows Server 2003
+
+### Create a Profile Configuration Account
+
+1. While logged on as Administrator , create a local Windows user account named Profile and add it to the Administrators group
+2. Configure the profile:
+    1. Log on as Profile
+    2. Make desired profile, desktop, and application changes
+    3. Log out
+
+### Copy the Customized Profile to "Default User"
+
+1. Log back on as Administrator
+2. Rename the C:\Documents and Settings\Default User directory to something like Default User Original
+3. Open the Control Panel
+4. Open System Properties
+5. Select the Advanced tab
+6. Click the Settings button next to User Profiles
+7. Select Profile's profile, click Copy To :
+    Copy profile to: C:\Documents and Settings\Default User
+    Permitted to use: add the Everyone group
+8. Click OK
+
+### Clean up the Profile Configuration Account
+
+1. Delete the Profile user
+2. Delete C:\Documents and Settings\Profile
+
+You can then create another account and log in using it to make sure your profile settings take affect for new users. Be sure to delete it once you're done testing.
