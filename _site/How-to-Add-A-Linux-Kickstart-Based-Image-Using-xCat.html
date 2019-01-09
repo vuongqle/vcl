@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>How to Add A Linux Kickstart Based Image Using xCat | vcl</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="How to Add A Linux Kickstart Based Image Using xCat" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<meta property="og:description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<link rel="canonical" href="http://localhost:4000/How-to-Add-A-Linux-Kickstart-Based-Image-Using-xCat.html" />
+<meta property="og:url" content="http://localhost:4000/How-to-Add-A-Linux-Kickstart-Based-Image-Using-xCat.html" />
+<meta property="og:site_name" content="vcl" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/How-to-Add-A-Linux-Kickstart-Based-Image-Using-xCat.html","headline":"How to Add A Linux Kickstart Based Image Using xCat","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=fbb1d6e4248b40c5458a98708bdaeec314f83ad4">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+
+      <h1><a href="http://localhost:4000/">How to Add A Linux Kickstart Based Image Using xCat</a></h1> 
+
+
+      <h2 id="guide-for-adding-kickstart-installs-using-xcat-to-the-vcl-database">Guide for adding kickstart installs using xCAT to the VCL database.</h2>
+
+<p>xCAT is the bare-metal provisioning tool primarily used within VCL. It has the ability to install physical nodes with an operating system such as; windows Red Hat, CentOS, ESX, SLES on x86 based hardware.  This guide will discuss adding support to VCL for kickstart based or diskfull installs.</p>
+
+<p>Prerequisites are that you need to have a working xCAT install. Please see xCAT installation guide in order to install and configure xCAT.</p>
+
+<ul>
+  <li>xCAT main page: http://xcat.sourceforge.net/</li>
+  <li>xCAT Getting Started guide: http://sourceforge.net/apps/mediawiki/xcat/index.php?title=XCAT_Documentation</li>
+</ul>
+
+<h2 id="kickstart-template-files">Kickstart Template files</h2>
+
+<p>The template files used by xCAT reside in /opt/xcat/share/xcat/install/<distro>. distro can be rh, centos, fedora, esx, etc. Make sure to have a working template file. There are several examples in either of the distro directories that can used as a starting point. Once you have a working template, proceed to adding to the VCL database.</distro></p>
+
+<h2 id="adding-kickstart-based-install-to-the-vcl-database">Adding kickstart based install to the VCL database</h2>
+<p>The name of the template file and the image.name must match. VCL uses this name to check for and properly load using kickstart method. The xcat name will have the .tmpl, for example the vcl image.name entry of rhel5-base25-v0 the template file for xcat will be rhel5-base25-v0.tmpl.</p>
+
+<p>There are three tables that need to have entries before you can start using the image through the VCL web interface. The tables used are:</p>
+<ul>
+  <li>image</li>
+  <li>imagerevision</li>
+  <li>resource</li>
+</ul>
+
+<p>Depending on your OS and the version of VCL, you might need to also create a new entry in the OS table. An example of adding a new OSid is discussed below.</p>
+
+<p>In our sql statement examples we will use RedHat 5 and the image id of 25 as above rhel5-base25-v0.  In the below sql statement make any changes as needed such as ownerid, in this example it is set to 1 or the admin user id.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INSERT INTO `image` (id, `name`, `prettyname`, `ownerid`, `platformid`, `OSid`, `minram`, `minprocnumber`, `minprocspeed`,
+`minnetwork`,`reloadtime`, `deleted`, `lastupdate`, `forcheckout`, `maxinitialtime`,`project`, `size`) VALUES (25,
+'rhel5-base25-v0', 'RHEL 5 base', 1, 1, 19, 1024, 1, 0, 10, 14, 0, NOW(), 1, 0, 'vcl', 1045);
+
+
+INSERT INTO `imagerevision` (`imageid`, `revision`, `userid`, `datecreated`, `deleted`, `production`,
+`comments`, `imagename`) VALUES (25, 0, 1, NOW(), 0, 1, NULL, 'rhel5-base25-v0');
+
+
+INSERT INTO `resource` (`resourcetypeid`, `subid`) VALUES (13, 25);
+</code></pre></div></div>
+
+<p>Again, the xCAT template .tmpl file must match the the entry VCL database entry of image.name.</p>
+
+<p>VCL image.name = rhel5-base25-v0 xCAT template file name = rhel5-base25-v0.tmpl
+At this point you will be able to manage this image through the VCL interface.</p>
+<ul>
+  <li>Go to Manage images</li>
+  <li>Edit image grouping</li>
+  <li>Select image group mapped to load onto your bare-metal blades. See adding computers to VCL if you have not added any physical nodes yet.</li>
+  <li>Add ‘RHEL 5 base’ to the desired image group</li>
+</ul>
+
+<h2 id="testing-kickstart-file">Testing kickstart file</h2>
+
+<p>Test the load, by either making a reservation for the new environment or try to reload a physical node through manage computers computer utilities. Watch the vcld.log file to view the processing and to debug any issues that may occur.</p>
+
+<h2 id="extending-the-os-table">Extending the OS table</h2>
+
+<p>If VCL supports the OS, extending the OS table for a new OS is fairly straight forward. In this example we will use Red Hat 6.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INSERT INTO `OS` (`name`, `prettyname`, `type`, `installtype`, `sourcepath`, `moduleid`)
+VALUES('rhel6','RedHat Enterprise 6','linux','kickstart','rhel6',(SELECT `id` FROM `module` WHERE `name`
+LIKE 'os_linux'));
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/pathoma4/vcl/edit/gh-pages/HowToAddALinuxKickstartBasedImageUsingxCAT.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>
