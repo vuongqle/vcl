@@ -8,7 +8,7 @@ permalink: How-To-Increase-The-Size-Of-A-Virtual-Machine-Hard-Drive-Under-VMware
 
 This page describes how to increase the size of a VM's hard drive. This is useful if additional space is needed to install large applications.
 
-### Create a Full Copy of the Virtual Disk
+###  Create a Full Copy of the Virtual Disk
 * Determine the VMware host the VM is on
 * Shutdown the VM
 * Log in to the VM host via SSH
@@ -30,7 +30,9 @@ You should see several files in the directory:
         -rw-rw----    1 root     root                432 Aug 13 16:32 vmwarewin7-Windows764bit1846-v14-000001.vmdk
 
 
-The VM is configured to run in linked clone mode because a snapshot was created before the VM was powered on for the first time. The .vmdk files in this directory only contain changes made to the master image. The master image can be determined by lookin in the .vmsn file:
+The VM is configured to run in linked clone mode because a snapshot was created before the VM was powered on for the first time. The .vmdk files in this directory only contain changes made to the master image.
+
+The master image can be determined by lookin in the .vmsn file:
 
         snapshot0.disk0.fileName = "/vmfs/volumes/e17be478-2ac3b743/vmwarewin7-Windows764bit1846-v14/vmwarewin7-Windows764bit1846-v14.vmdk"
 
@@ -38,7 +40,9 @@ or
 
         scsi0:0.fileName = "/vmfs/volumes/e17be478-2ac3b743/vmwarewin7-Windows764bit1846-v14/vmwarewin7-Windows764bit1846-v14.vmdk"
 
-A full copy of the master image and delta files needs to be created in order to be able to resize the virtual disk. Run the following command from the VM's working directory on the VM host:
+A full copy of the master image and delta files needs to be created in order to be able to resize the virtual disk.
+
+Run the following command from the VM's working directory on the VM host:
 
         vmkfstools -i vmwarewin7-Windows764bit1846-v14-000001.vmdk copy.vmdk -d thin
 
@@ -55,7 +59,9 @@ Run the following command to resize the virtual disk. The -X argument should spe
 
 ### Download Gparted Live CD
 
-Download the [GParted Live CD ISO image] (https://gparted.sourceforge.io/download.php) to one of the datastores mounted on the VM host.  The .iso file must reside on one of the datastores in order to be able to mount it on a VM.
+Download the [GParted Live CD ISO image] (https://gparted.sourceforge.io/download.php) to one of the datastores mounted on the VM host.  
+
+The .iso file must reside on one of the datastores in order to be able to mount it on a VM.
 
 ### Replace the VM's Hard Drive with the Full Copy
 
@@ -80,7 +86,9 @@ After the copy has been created, reconfigure the VM to use the copy of the disk 
 
 ### Increase the Power On Boot Delay
 
-It can be difficult to catch the initial boot screen when the VM is powered on in order to press Escape to display the boot menu.  Add a delay:
+It can be difficult to catch the initial boot screen when the VM is powered on in order to press Escape to display the boot menu.  
+
+Add a delay:
 
 * Click on the Options tab
 * Select Boot Options

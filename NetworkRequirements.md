@@ -15,4 +15,4 @@ This is enabled by installing two Ethernet NICs per target server, with a minimu
 For additional details, see the [Network Layout](network-layout.html) page.
 
 
-Note from above that under some possible operational modes, only one NIC is required (e.g., when accessing the IBM Smart Cloud). Under other circumstances (e.g., controlling blades) more than two NICs may be recommended.
+*Note from above that under some possible operational modes, only one NIC is required (e.g., when accessing the IBM Smart Cloud). Under other circumstances (e.g., controlling blades) more than two NICs may be recommended.*

@@ -5,7 +5,9 @@ sidebar: mydoc_sidebar
 permalink: How-to-Configure-the-Windows-Default-User-Profile.html
 ---
 
-A Windows user profile defines the look and feel of the desktop environment configured for a particular user. It contains various settings such as desktop colors, backgrounds, icon placement, and Windows Explorer settings. The default profile is a template profile that is used when a user logs on to a Windows computer for the first time. The default profile can be customized by the image creator.
+A Windows user profile defines the look and feel of the desktop environment configured for a particular user. It contains various settings such as desktop colors, backgrounds, icon placement, and Windows Explorer settings.
+
+The default profile is a template profile that is used when a user logs on to a Windows computer for the first time. The default profile can be customized by the image creator.
 
 * [Windows 7 and Windows Server 2008](#windows-7-and-windows-server-2008)
     * [Enable Desktop Background](#enable-desktop-background)
@@ -22,7 +24,9 @@ A Windows user profile defines the look and feel of the desktop environment conf
 
 ## Windows 7 and Windows Server 2008
 
-Microsoft does not support copying profiles under Windows 7 and Windows Server 2008. The "Copy To" button is grayed out for all profiles except the default profile. The only supported method is built into Sysprep and this method is itself very problematic. The following steps are not supported or recommended by Microsoft but seem to work:
+Microsoft does not support copying profiles under Windows 7 and Windows Server 2008. The "Copy To" button is grayed out for all profiles except the default profile.
+
+The only supported method is built into Sysprep and this method is itself very problematic. The following steps are not supported or recommended by Microsoft but seem to work:
 
 ### Enable Desktop Background
 1. Download and edit the RDP file for your imaging reservation from the VCL website to allow desktop backgrounds or else you won’t be able to change the desktop background color
@@ -153,9 +157,13 @@ Any new local user accounts created on the computer should receive a user profil
 
 ### Force the Desktop Background to Appear on Windows 7 & Windows Server 2008 (Optional)
 
-The following procedure should force a desktop wallpaper image to be displayed for all users regardless of whether or not the Desktop Background option is selected in the .rdp file.  This could be useful if you want a logo or an image containing instructions for the user to always be displayed.  There are some local group policy settings which can be configured to force a wallpaper to be shown and prevent users from changing it.  However, this only seems to work if the Desktop Background option is selected in the .rdp file.
+The following procedure should force a desktop wallpaper image to be displayed for all users regardless of whether or not the Desktop Background option is selected in the .rdp file.  This could be useful if you want a logo or an image containing instructions for the user to always be displayed.  
 
-You may encounter difficulty getting the wallpaper to be displayed under all situations.  One known situation is when a user connects with the Desktop Background option disabled.  The wallpaper should be displayed initially.  If the user disconnects from the remote computer (but does not log out) and then reconnects, the wallpaper will probably not appear.
+There are some local group policy settings which can be configured to force a wallpaper to be shown and prevent users from changing it.  However, this only seems to work if the Desktop Background option is selected in the .rdp file.
+
+You may encounter difficulty getting the wallpaper to be displayed under all situations.  One known situation is when a user connects with the Desktop Background option disabled.  The wallpaper should be displayed initially.
+
+ If the user disconnects from the remote computer (but does not log out) and then reconnects, the wallpaper will probably not appear.
 
 1. Run gpedit.msc
 2. Navigate to User Configuration > Windows Settings > Scripts (Logon/Logoff)
