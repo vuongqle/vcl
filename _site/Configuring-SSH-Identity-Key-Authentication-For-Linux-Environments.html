@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Configuring SSH Identity Key Authentication For Linux Environments | vcl</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Configuring SSH Identity Key Authentication For Linux Environments" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<meta property="og:description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<link rel="canonical" href="http://localhost:4000/Configuring-SSH-Identity-Key-Authentication-For-Linux-Environments.html" />
+<meta property="og:url" content="http://localhost:4000/Configuring-SSH-Identity-Key-Authentication-For-Linux-Environments.html" />
+<meta property="og:site_name" content="vcl" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/Configuring-SSH-Identity-Key-Authentication-For-Linux-Environments.html","headline":"Configuring SSH Identity Key Authentication For Linux Environments","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=10be2bdb9e2d45aaad3923ff16cd58614101a619">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+
+      <h1><a href="http://localhost:4000/">Configuring SSH Identity Key Authentication For Linux Environments</a></h1> 
+
+
+      <p>VCL provides the ability for end users to authenticate to Linux environments using SSH identity keys. The user must first create an SSH key pair (private and public) before proceeding with the steps below. Search online for a tutorial on creating and using SSH key pairs, here are a few.</p>
+
+<p><a href="http://the.earth.li/~sgtatham/putty/0.63/htmldoc/Chapter8.html#pubkey-puttygen">PuTTygen Instructions</a></p>
+
+<p><a href="http://docs.oracle.com/cd/E19253-01/816-4557/sshuser-33/index.html">ssh-keygen nstructions from Oracle</a></p>
+
+<p>Once SSH key pairs are created, perform the following steps to enable this feature for your VCL account.</p>
+
+<ol>
+  <li>Go to your VCL User Preferences</li>
+  <li>Select General Preferences</li>
+  <li>Click the Enabled radio button under Use public key authentication for SSH logins</li>
+  <li>
+    <p>Paste the contents of your public key file in the Public keys box</p>
+
+    <p><img src="images/sshkeys.png" width="400" border="1" /></p>
+  </li>
+  <li>Click the Submit General Preferences button.</li>
+</ol>
+
+<p>On your next VCL reservation, your public key will be inserted onto the assigned machine.</p>
+
+<p><strong><em>NOTE: This change will not be applied to existing reservations.</em></strong></p>
+
+<p>To test this change, make a new reservation. When connecting to your reservation, specify the private key that matches the public key you used in the previous steps when you attempt to make an SSH connection with the  VCL image.</p>
+
+<p>If you are using a Linux or Mac machine to connect with the VCL image  you can use the following SSH syntax in a terminal window.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      ssh -i &lt;path_to_private_ssh_key&gt; &lt;username&gt;@&lt;ipaddress&gt;
+</code></pre></div></div>
+
+<p>Replace <path_to_private_ssh_key> with the actual directory path to  your private ssh key (e.g. .ssh/id_rsa). Replace <username> with  your actual username. Replace <ipaddress> with the IP address of  the VCL image listed in the Current reservation page.</ipaddress></username></path_to_private_ssh_key></p>
+
+<p>If you are using a local Windows machine, you’ll probably be using Putty for  your SSH connection. Make sure you specify the “private key file for  authentication” in the “Options controlling SSH authentication”  section of Putty. You can find this section by navigating through the  options on the left side of Putty…</p>
+
+<p>Connection » SSH » Auth</p>
+
+<p><strong>WARNING:</strong> The ssh identity key will not work for images where your home directory  resides on a network file system that cannot be accessed until you  authenticate to the remote computer, such as OpenAFS.</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/pathoma4/vcl/edit/gh-pages/ConfiguringSSHIdentityKeyAuthenticationForLinuxEnvironments.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

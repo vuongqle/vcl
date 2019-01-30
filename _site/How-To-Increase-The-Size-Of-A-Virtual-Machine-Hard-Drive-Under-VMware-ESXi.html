@@ -19,7 +19,7 @@
 {"url":"http://localhost:4000/How-To-Increase-The-Size-Of-A-Virtual-Machine-Hard-Drive-Under-VMware-ESXi.html","headline":"How to Increase the Size of a Virtual Machine Hard Drive Under VMware ESXi","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=9e99ed14eb60f53d46add2015eee770b1cd00aec">
+    <link rel="stylesheet" href="/assets/css/style.css?v=10be2bdb9e2d45aaad3923ff16cd58614101a619">
   </head>
   <body>
     <div class="container-lg px-3 my-5 markdown-body">
@@ -56,7 +56,9 @@
     -rw-rw----    1 root     root                432 Aug 13 16:32 vmwarewin7-Windows764bit1846-v14-000001.vmdk
 </code></pre></div></div>
 
-<p>The VM is configured to run in linked clone mode because a snapshot was created before the VM was powered on for the first time. The .vmdk files in this directory only contain changes made to the master image. The master image can be determined by lookin in the .vmsn file:</p>
+<p>The VM is configured to run in linked clone mode because a snapshot was created before the VM was powered on for the first time. The .vmdk files in this directory only contain changes made to the master image.</p>
+
+<p>The master image can be determined by lookin in the .vmsn file:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    snapshot0.disk0.fileName = "/vmfs/volumes/e17be478-2ac3b743/vmwarewin7-Windows764bit1846-v14/vmwarewin7-Windows764bit1846-v14.vmdk"
 </code></pre></div></div>
@@ -66,7 +68,9 @@
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    scsi0:0.fileName = "/vmfs/volumes/e17be478-2ac3b743/vmwarewin7-Windows764bit1846-v14/vmwarewin7-Windows764bit1846-v14.vmdk"
 </code></pre></div></div>
 
-<p>A full copy of the master image and delta files needs to be created in order to be able to resize the virtual disk. Run the following command from the VM’s working directory on the VM host:</p>
+<p>A full copy of the master image and delta files needs to be created in order to be able to resize the virtual disk.</p>
+
+<p>Run the following command from the VM’s working directory on the VM host:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    vmkfstools -i vmwarewin7-Windows764bit1846-v14-000001.vmdk copy.vmdk -d thin
 
@@ -85,7 +89,9 @@
 
 <h3 id="download-gparted-live-cd">Download Gparted Live CD</h3>
 
-<p>Download the [GParted Live CD ISO image] (https://gparted.sourceforge.io/download.php) to one of the datastores mounted on the VM host.  The .iso file must reside on one of the datastores in order to be able to mount it on a VM.</p>
+<p>Download the [GParted Live CD ISO image] (https://gparted.sourceforge.io/download.php) to one of the datastores mounted on the VM host.</p>
+
+<p>The .iso file must reside on one of the datastores in order to be able to mount it on a VM.</p>
 
 <h3 id="replace-the-vms-hard-drive-with-the-full-copy">Replace the VM’s Hard Drive with the Full Copy</h3>
 
@@ -113,7 +119,9 @@
 
 <h3 id="increase-the-power-on-boot-delay">Increase the Power On Boot Delay</h3>
 
-<p>It can be difficult to catch the initial boot screen when the VM is powered on in order to press Escape to display the boot menu.  Add a delay:</p>
+<p>It can be difficult to catch the initial boot screen when the VM is powered on in order to press Escape to display the boot menu.</p>
+
+<p>Add a delay:</p>
 
 <ul>
   <li>Click on the Options tab</li>
@@ -161,6 +169,10 @@
 <p>The saved VCL image will contain the larger hard drive.</p>
 
 
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/pathoma4/vcl/edit/gh-pages/HowToIncreaseTheSizeOfAVirtualMachineHardDriveUnderVMwareESXi.md">Improve this page</a>.
+      </div>
       
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
