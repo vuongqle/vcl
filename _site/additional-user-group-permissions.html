@@ -19,7 +19,7 @@
 {"url":"http://localhost:4000/additional-user-group-permissions.html","headline":"Additional User Group Permissions","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=ac0a4a706bbae4919e3a95a17fa4c014e8e14143">
+    <link rel="stylesheet" href="/assets/css/style.css?v=130772071a820f435247ba4c1f14ddba71f76171">
   </head>
   <body>
     <div class="container-lg px-3 my-5 markdown-body">
@@ -28,6 +28,25 @@
 
 
       <p>In addition to the primary set of <a href="resources-groups-privileges.html#user-permissions">User Permissions</a>, there are several additional permissions that can be granted to user groups. These are things that don’t make sense to have tied to a particular privilege node because they aren’t directly used in conjunction with resources. They are accessed under Privileges -&gt; Additional User Group Permissions.</p>
+
+<ul>
+  <li><strong>Manage Additional User Group Permissions</strong> - grants users access to see this portion of the site (should only be granted to high level admins)</li>
+  <li><strong>Manage Block Allocations (affiliation only)</strong> - grants access to manage Block Allocations requested by users of the same affiliation as the logged in user</li>
+  <li><strong>Manage Block Allocations (global)</strong> - grants access to manage Block Allocations requested by users of any affiliation</li>
+  <li><strong>Manage Federated User Groups (affiliation only)</strong> - grants access to manage federated user groups having the same affiliation as the logged in user</li>
+  <li><strong>Manage Federated User Groups (global)</strong> - grants access to manage federated user groups having any affiliation</li>
+  <li><strong>Manage VM Profiles</strong> - grants access to manage VM Host Profiles under Virtual Hosts -&gt; VM Host Profiles</li>
+  <li><strong>Schedule Site Maintenance</strong> - grants access to manage Site Maintenance</li>
+  <li><strong>Set Overlapping Reservation Count</strong> - grants access to set how many overlapping reservations users in a user group may have</li>
+  <li><strong>Site Configuration (affiliation only)</strong> - grants access to manage things under the Site Configuration part of the site for the affiliation matching the logged in user (does not include access to Global only settings)</li>
+  <li><strong>Site Configuration (global)</strong> - grants access to manage things under the Site Configuration part of the site for all affiliations and for Global settings</li>
+  <li><strong>User Lookup (affiliation only)</strong> - grants access to look up information about users having the same affiliation as the logged in user</li>
+  <li><strong>User Lookup (global)</strong> - grants access to look up information about users of any affiliation</li>
+  <li><strong>View Dashboard (affiliation only)</strong> - grants access to view information on the Dashboard related to users matching the affiliation of the logged in user</li>
+  <li><strong>View Dashboard (global)</strong> - grants access to view information on the Dashboard related to any user</li>
+  <li><strong>View Debug Information</strong> - grants access to view various debug related information throughout the site (things like the request.id of a reservation being displayed on the Reservations page)</li>
+  <li><strong>View Statistics by Affiliation</strong> - grants access to select the affiliation (or compilation of all affiliations) for which to view statistics</li>
+</ul>
 
 
       

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Privileges | vcl</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Privileges" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<meta property="og:description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<link rel="canonical" href="http://localhost:4000/privileges.html" />
+<meta property="og:url" content="http://localhost:4000/privileges.html" />
+<meta property="og:site_name" content="vcl" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/privileges.html","headline":"Privileges","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=130772071a820f435247ba4c1f14ddba71f76171">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+
+      <h1><a href="http://localhost:4000/">Privileges</a></h1> 
+
+
+      <p>Users are granted access to parts of the VCL web site and to resources through the Privilege tree. User permissions and resource attributes can both be cascaded down from one node to all of its children. Additionally, cascaded user permissions and resource attributes can be blocked at a node so that they do not cascade down to that node or any of its children.</p>
+
+<h2 id="user-permissions">User Permissions</h2>
+
+<p>There are ten user permissions that can be granted to users. They can be granted to users directly or to user groups.</p>
+
+<ul>
+  <li><strong>addomainAdmin</strong> - allows users to do administrative tasks with AD Domains in AD Domain groups with administer or manageGroup granted at the same node</li>
+  <li><strong>computerAdmin</strong> - allows users to do administrative tasks with computers in computer groups with administer or manageGroup granted at the same node</li>
+  <li><strong>groupAdmin</strong> - grants users access to the Manage Groups portion of the site</li>
+  <li><strong>imageAdmin</strong> - allows users to do administrative tasks with images in image groups with administer or manageGroup granted at the same node</li>
+  <li><strong>imageCheckOut</strong> - allows users to make reservations for images in image groups with available granted at the same node</li>
+  <li><strong>mgmtNodeAdmin</strong> - allows users to do administrative tasks with management nodes in management node groups with administer or manageGroup granted at the same node</li>
+  <li><strong>nodeAdmin</strong> - allows users to add and delete child nodes at the specified node</li>
+  <li><strong>resourceGrant</strong> - grants users access to control what resource attributes are assigned at the same node</li>
+  <li><strong>scheduleAdmin</strong> - allows users to do administrative tasks with schedules in schedule groups with administer or manageGroup granted at the same node</li>
+  <li><strong>userGrant</strong> - grants users access to control what user permissions are assigned at the same node</li>
+</ul>
+
+<h2 id="resource-attributes">Resource Attributes</h2>
+
+<p>There are three resource attributes that can be assigned to a resource group at any node in the privilege tree.</p>
+
+<ul>
+  <li><strong>available</strong> - makes resources in the group available at the node - this is only has meaning for image groups and computer groups and relates to the imageCheckOut and imageAdmin user permissions</li>
+  <li><strong>administer</strong> - makes the resources in the group available to be administered by users with the appropriate user permissions at the same node (i.e. imageAdmin for image groups, computerAdmin for computer groups, etc)</li>
+  <li><strong>manageGroup</strong> - makes the resources in the group available to have their grouping controlled by users with the appropriate user permissions at the same node</li>
+  <li><strong>manageMapping</strong> - makes the resources in the group available to have their mapping controlled by users with the appropriate user permissions at the same node</li>
+</ul>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/pathoma4/vcl/edit/gh-pages/Privileges.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>
