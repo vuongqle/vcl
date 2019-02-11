@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Manual Database Manipulation | vcl</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Manual Database Manipulation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<meta property="og:description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<link rel="canonical" href="http://localhost:4000/Manual-Database-Manipulation.html" />
+<meta property="og:url" content="http://localhost:4000/Manual-Database-Manipulation.html" />
+<meta property="og:site_name" content="vcl" />
+<script type="application/ld+json">
+{"headline":"Manual Database Manipulation","url":"http://localhost:4000/Manual-Database-Manipulation.html","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=8e39195660e6f869e7e96fab88a6f0a9eb1563db">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+
+      <h1><a href="http://localhost:4000/">Manual Database Manipulation</a></h1> 
+
+
+      <p>As a VCL administrator, there will likely be times when direct interaction with the VCL database is required.  You may need to query the database in order to troubleshoot a problem or run a custom query for a report.  There are also a very small number of configuration tasks that require direct interaction with the VCL database.</p>
+
+<h2 id="using-phpmyadmin">Using phpMyAdmin</h2>
+
+<p>For most people, phpMyAdmin is an easier method of interacting with the database versus using the mysql command line utility.  Installation and configuration of phpMyAdmin is beyond the scope of this document.  For more information, see <a href="https://www.phpmyadmin.net/.">https://www.phpmyadmin.net/.</a></p>
+
+<h2 id="using-the-mysql-command-line-utility">Using the mysql Command Line Utility</h2>
+
+<p>The database may be queried or altered using the <strong><em>mysql</em></strong> utility.  Use this method only if you are comfortable using command line utilities and have some knowledge of <a href="https://mariadb.com/kb/en/mariadb/sql-commands/">MariaDB</a> syntax.</p>
+
+<h3 id="installing-the-mysql-command-line-utility">Installing the mysql Command Line Utility</h3>
+
+<p>The <strong><em>mysql binary</em></strong> is installed as part of the <strong>mariadb</strong> package.  If you are connecting to the VCL database from the console of the either the actual database server or a VCL management node, the mariadb package is probably already installed.  If you are connecting from another host and the <strong><em>mysql</em></strong> command is not available, install the <strong>mariadb</strong> package by executing the following command:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo yum install -y mariadb
+</code></pre></div></div>
+
+<h2 id="connecting-to-the-vcl-database-server">Connecting to the VCL Database Server</h2>
+
+<h3 id="connecting-directly-from-the-database-server">Connecting Directly From the Database Server</h3>
+
+<p>The easiest location to connect to the VCL database is from the console of the database server itself.  You may be able to simply run the following command:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mysql -u &lt;username&gt; -p vcl
+Enter password:
+MariaDB [vcl]&gt;
+</code></pre></div></div>
+
+<p><em>You may see an error similar to the following:</em></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/srv/mysql/mysqld.sock' (2)
+</code></pre></div></div>
+
+<p>If you see this error, determine which Unix socket file the server is using:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ netstat -ln | grep mysql
+unix  2      [ ACC ]     STREAM     LISTENING     515320596 /var/run/mysql/mysqld.sock
+</code></pre></div></div>
+
+<p>And adjust the command accordingly:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mysql -S /var/run/mysql/mysqld.sock -u &lt;username&gt; -p vcl
+Enter password:
+MariaDB [vcl]&gt;
+</code></pre></div></div>
+
+<h3 id="connecting-from-another-host">Connecting From Another Host</h3>
+
+<p>If you don’t have console or SSH access to the database server, you can probably connect from a VCL management node (assuming you have a management node running on a machine other than the database server).  The database server’s firewall must allow traffic from the remote computer that <strong>mysql</strong> is executed on to the database server, usually TCP port 3306.</p>
+
+<p>You will need to know the database server hostname or IP address, username, password, and name of the database (usually vcl).  If you are connecting from a VCL management node, the settings stored in the <strong><em>/etc/vcl/vcld.conf</em></strong> file should allow you to connect:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><strong>Setting in  /etc/vcl/vcld.conf</strong></td>
+      <td><strong>mysql Command Argument</strong></td>
+    </tr>
+    <tr>
+      <td>server=vcl-db-01.my.org</td>
+      <td>–host=vcl-db-01.my.org</td>
+    </tr>
+    <tr>
+      <td>LockerWrtUser=vclmn</td>
+      <td>–user=vclmn</td>
+    </tr>
+    <tr>
+      <td>wrtPass=<password></password></td>
+      <td>-p, Enter password:</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>~or –password=<password></password></td>
+    </tr>
+    <tr>
+      <td>database=vcldb</td>
+      <td>–database=vcldb</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ mysql --host=vcl-db-01.my.org --user=vclmn -p --database=vcldb
+Enter password: &lt;password&gt;
+MariaDB [vcldb]&gt;
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/pathoma4/vcl/edit/gh-pages/ManualDatabaseManipulation.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>
