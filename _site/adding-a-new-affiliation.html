@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Adding a New Affiliation | vcl</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Adding a New Affiliation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<meta property="og:description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<link rel="canonical" href="http://localhost:4000/adding-a-new-affiliation.html" />
+<meta property="og:url" content="http://localhost:4000/adding-a-new-affiliation.html" />
+<meta property="og:site_name" content="vcl" />
+<script type="application/ld+json">
+{"headline":"Adding a New Affiliation","url":"http://localhost:4000/adding-a-new-affiliation.html","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=8e39195660e6f869e7e96fab88a6f0a9eb1563db">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+
+      <h1><a href="http://localhost:4000/">Adding a New Affiliation</a></h1> 
+
+
+      <p>Adding new affiliations is normally done when a VCL deployment is initially installed or when an existing deployment grows to include additional institutions.  To add a new affiliation, you will need to manually add an entry to the VCL database.  See the <a href="Manual-Database-Manipulation.html">Manual Database Manipulation</a> for more information.</p>
+
+<h2 id="add-a-row-to-the-affiliation-table">Add a Row to the affiliation Table</h2>
+
+<p>To add a new affiliation to the VCL database, a row must be inserted into the affiliation table.  The affiliation table in a stock VCL database contains two rows:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT * FROM affiliation;
+
++----+--------+----------+----------------+----------------+-------------+----------+---------+
+| id | name   | shibname | dataUpdateText | sitewwwaddress | helpaddress | shibonly | theme   |
++----+--------+----------+----------------+----------------+-------------+----------+---------+
+|  1 | Local  | NULL     |                | NULL           | NULL        |        0 | default |
+|  2 | Global | NULL     |                | NULL           | NULL        |        0 | default |
++----+--------+----------+----------------+----------------+-------------+----------+---------+
+</code></pre></div></div>
+
+<p>Add a new row to the <strong><em>affiliation</em></strong> table by executing an SQL query similar to the following:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>INSERT INTO vcl.affiliation (name, sitewwwaddress, helpaddress) VALUES ('VCL University LDAP', 'www.example.edu', 'help@example.edu');
+</code></pre></div></div>
+
+<p>Verify the row has been added:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT * FROM affiliation;
+
++----+---------------------+----------+----------------+-----------------+------------------+----------+---------+
+| id | name                | shibname | dataUpdateText | sitewwwaddress  | helpaddress      | shibonly | theme   |
++----+---------------------+----------+----------------+-----------------+------------------+----------+---------+
+|  1 | Local               | NULL     |                | NULL            | NULL             |        0 | default |
+|  2 | Global              | NULL     |                | NULL            | NULL             |        0 | default |
+|  3 | VCL University LDAP | NULL     |                | www.example.edu | help@example.edu |        0 | default |
++----+---------------------+----------+----------------+-----------------+------------------+----------+---------+
+</code></pre></div></div>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/pathoma4/vcl/edit/gh-pages/AddingANewAffiliation.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>
