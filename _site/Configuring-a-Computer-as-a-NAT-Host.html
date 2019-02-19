@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Configuring a Computer as a NAT Host | vcl</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Configuring a Computer as a NAT Host" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<meta property="og:description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<link rel="canonical" href="http://localhost:4000/Configuring-a-Computer-as-a-NAT-Host.html" />
+<meta property="og:url" content="http://localhost:4000/Configuring-a-Computer-as-a-NAT-Host.html" />
+<meta property="og:site_name" content="vcl" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/Configuring-a-Computer-as-a-NAT-Host.html","headline":"Configuring a Computer as a NAT Host","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=5a462ccebd38c405a5d0383f2220b85b4c0a08c1">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+
+      <h1><a href="http://localhost:4000/">Configuring a Computer as a NAT Host</a></h1> 
+
+
+      <p><a href="management-nodes.html">Management Nodes</a> and <a href="computers.html">Computers</a> can be used as NAT Hosts. Any individual VM can be used as a NAT host provided that it is connected to the appropriate networks. Additionally, VM Hosts that are full Linux systems such as KVM can be used as NAT hosts.</p>
+
+<h3 id="configuring-a-computer-as-a-nat-host">Configuring a Computer as a NAT Host</h3>
+<p>Under Manage Computers-&gt;Edit Computer Profiles, select Edit for the desired computer. At the bottom of the dialog box that is displayed is a section for configuring it as a NAT host.</p>
+
+<p><img src="images/image2017-5-5 9_46_13.png" width="500" border="1" /></p>
+
+<ul>
+  <li>Check the box for <strong>Use as NAT Host</strong> (note that <strong>Connect Using NAT</strong> and <strong>Use as NAT Host</strong> are mutually exclusive)</li>
+  <li>Set <strong>NAT Public IP Address</strong> to the IP address on the computer that is connected to the Internet. This is the address that will be displayed to users to which they will connect.</li>
+  <li>Set <strong>NAT Internal IP Address to the IP address</strong> on the computer that is on the same network as the VMs to which it will be providing NAT service.</li>
+</ul>
+
+<h3 id="configuring-a-management-node-as-a-nat-host">Configuring a Management Node as a NAT Host</h3>
+<p>Under Management Nodes-&gt;Edit Management Node Profiles, select Edit for the desired management node. At the bottom of the dialog box that is displayed is a section for configuring it as a NAT host.</p>
+
+<p><img src="images/image2017-5-5 9_50_48.png" width="500" border="1" /></p>
+
+<ul>
+  <li>Check the box for <strong>Use as NAT Host</strong></li>
+  <li>Set <strong>NAT Public IP Address</strong> to the IP address on the management node that is connected to the Internet. This is the address that will be displayed to users to which they will connect.</li>
+  <li>Set <strong>NAT Internal IP Address</strong> to the IP address on the management node that is on the same network as the VMs to which it will be providing NAT service.</li>
+</ul>
+
+<h3 id="example">Example</h3>
+<p>This example uses 3 networks. NAT Host can refer to a computer or a management node.</p>
+
+<ul>
+  <li>Private
+    <ul>
+      <li>internal, used for management node to provision VMs
+        <ul>
+          <li>IP space: 192.168.100.0/22</li>
+          <li>NAT Host IP: 192.168.100.1</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>NAT
+    <ul>
+      <li>internal, used to provide NAT service
+        <ul>
+          <li>IP space: 192.168.200/22</li>
+          <li>NAT Host IP: 192.168.200.1</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Public
+    <ul>
+      <li>public connection to the Internet
+        <ul>
+          <li>NAT Host IP: 100.100.100.50</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>In this example, each VM would be entered under the Manage Computers part of the site with an address from the Private network and an address from the NAT network would be entered for the VMs public IP.</p>
+
+<p><em>To configure the NAT host, the following 2 values would be used:</em></p>
+<ul>
+  <li><strong>NAT Public IP Address</strong>: 100.100.100.50</li>
+  <li><strong>NAT Internal IP Address</strong>: 192.168.200.1</li>
+</ul>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/pathoma4/vcl/edit/gh-pages/ConfiguringAComputerAsANATHost.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>

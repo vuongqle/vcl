@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Preparing a System For Use As a NAT Host | vcl</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Preparing a System For Use As a NAT Host" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<meta property="og:description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<link rel="canonical" href="http://localhost:4000/Preparing-a-System-For-Use-As-a-NAT-Host.html" />
+<meta property="og:url" content="http://localhost:4000/Preparing-a-System-For-Use-As-a-NAT-Host.html" />
+<meta property="og:site_name" content="vcl" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/Preparing-a-System-For-Use-As-a-NAT-Host.html","headline":"Preparing a System For Use As a NAT Host","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=5a462ccebd38c405a5d0383f2220b85b4c0a08c1">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+
+      <h1><a href="http://localhost:4000/">Preparing a System For Use As a NAT Host</a></h1> 
+
+
+      <p>VCL handles most of the configuration of a NAT host the first time a reservation is deployed that uses the NAT host. However, there are some things that should be configured on the NAT host at installation time.</p>
+
+<h3 id="network-interfaces">Network Interfaces</h3>
+
+<p>Each NAT host should have at least 3 network interfaces:</p>
+
+<ol>
+  <li><strong>Private or control network</strong>:</li>
+</ol>
+
+<p>This interface should be configured with an IP address on the same network as the management node that will be deploying nodes using the NAT host. SSH must be configured to be listening on this interface as well as having identity keys set up so that root can ssh from the management node to the NAT host.</p>
+
+<ol>
+  <li><strong>NAT network</strong>:</li>
+</ol>
+
+<p>This interface should be configured with an IP address on the same network as the “Public” interface for each of the VCL nodes that will be deployed. This network carries user network traffic that flows between the NAT host and each VCL node. The NAT host needs to be configured to allow IP forwarding between this interface and the Public network interface.</p>
+
+<ol>
+  <li><strong>Internet/Public network</strong>:</li>
+</ol>
+
+<p>This interface should be configured with an IP address accessible on the public Internet, or whatever network users will be connected to for accessing the VCL system.</p>
+
+<p><img src="images/NAT-Host.png" width="800" border="1" /></p>
+
+<h3 id="firewall-configuration">Firewall Configuration</h3>
+
+<p>The firewall on the NAT host needs to be configured to</p>
+
+<ul>
+  <li>Allow ssh from the management node</li>
+  <li>Allow forwarding from NAT network to Public network</li>
+  <li>Allow forwarding from Public network to NAT network</li>
+  <li>Drop all other forwarding</li>
+  <li>Drop incoming traffic from Public network (forwarded traffic does not get dropped along with this)</li>
+  <li>Allow any additional traffic in needed to manage it in your environment</li>
+</ul>
+
+<h3 id="iptables">iptables</h3>
+
+<p>If using iptables for the firewall, rules similar to the following should be configured.</p>
+
+<ul>
+  <li>eth0 will be used for the Control network</li>
+  <li>eth1 will be used for the NAT network with IP range 192.168.200.0/24 used on that network</li>
+  <li>
+    <p>eth2 will be used for the Public network</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  -A INPUT -s 192.168.100.10/32 -i eth0 -p tcp -m tcp --dport 22 -m state --state NEW -j ACCEPT # allow management node
+  -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+  -A INPUT -p icmp -j ACCEPT
+  -A INPUT -i lo -j ACCEPT
+  -A INPUT -j REJECT --reject-with icmp-host-prohibited
+  -A FORWARD -s 192.168.200.0/24 -i eth1 -o eth2 -j ACCEPT # allow traffic from NAT to Public
+  -A FORWARD -d 192.168.200.0/24 -i eth2 -o eth1 -j ACCEPT # allow traffic from Public to NAT
+  -A FORWARD -j REJECT --reject-with icmp-port-unreachable # reject any other forwarding
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/pathoma4/vcl/edit/gh-pages/PreparingASystemForUseAsANATHost.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>
