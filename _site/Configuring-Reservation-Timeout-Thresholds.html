@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Configuring Reservation Timeout Thresholds | vcl</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Configuring Reservation Timeout Thresholds" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<meta property="og:description" content="Documentation for the Apache VCL (Virtual Computing Lab) project" />
+<link rel="canonical" href="http://localhost:4000/Configuring-Reservation-Timeout-Thresholds.html" />
+<meta property="og:url" content="http://localhost:4000/Configuring-Reservation-Timeout-Thresholds.html" />
+<meta property="og:site_name" content="vcl" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/Configuring-Reservation-Timeout-Thresholds.html","headline":"Configuring Reservation Timeout Thresholds","description":"Documentation for the Apache VCL (Virtual Computing Lab) project","@type":"WebPage","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=f4bf3c3b5b56dec6dd9d402b33f90ad6113cbbaf">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+
+      <h1><a href="http://localhost:4000/">Configuring Reservation Timeout Thresholds</a></h1> 
+
+
+      <h2 id="overview">Overview</h2>
+
+<p>Timeouts are a natural part of how VCL reservations are processed. Timeouts are used to control the various interactions or VCL processing of a reservation. All timeout thresholds are configured on the Site Configuration page of the VCL portal. The timeouts allow for a single global setting or you can set the timeouts for individual affiliations if you are supporting multiple institutions on your VCL system. Each of the various timeout variables are discussed below.</p>
+
+<h2 id="acknowledge-reservation-timeout">Acknowledge Reservation Timeout</h2>
+
+<p>Once the user’s reservation is ready, the user will need to click on the Connect button on the reservations page before continuing. The Acknowledge Reservation Timeout is related to the amount of time VCL system should wait for user interaction before automatically ending the reservation request. If the timeout is reached and the user has not acknowledged, the reservation is set to the appropriate state that begins the cleanup process of removing the user’s account. This setting does not apply to Server reservations. A single VCL system can have multiple Acknowledge Reservation Timeouts to support different affiliations.</p>
+
+<p><img src="images/Screen Shot 2017-03-15 at 4.05.53 PM.png" width="500" border="1" /></p>
+
+<h2 id="connect-to-reservation-timeout">Connect to Reservation Timeout</h2>
+
+<p>After a user clicks the Connect button to acknowledge the reservation, user’s will have a set time period to connect to the remote machine set by the Connect To Reservation Timeout variable. If the user does not connect to the remote machine within the provided time, the reservation is set to the appropriate state that begins the cleanup process of removing the user’s account, reseting the firewall, and other related tasks.</p>
+
+<p><img src="images/Screen Shot 2017-03-15 at 4.10.08 PM.png" width="500" border="1" /></p>
+
+<h2 id="in-use-reservation-check">In-Use Reservation Check</h2>
+
+<p>Defines the frequency to check for user connections to a user’s VCL machine during an active general reservation.</p>
+
+<p><img src="images/Screen Shot 2017-03-15 at 4.32.07 PM.png" width="500" border="1" /></p>
+
+<p>##In-Use Reservation Check (servers)</p>
+
+<p>Defines the frequency to check for user connections during a server reservation. Server reservations are considered to be active for a long duration, it is recommended this value be high such as 30 minutes or an hour. Because this is a server reservation if the user is not actively connected to the machine no action is taken until the scheduled end of the reservation.</p>
+
+<p><img src="images/Screen Shot 2017-03-16 at 1.56.52 PM.png" width="500" border="1" /></p>
+
+<h2 id="in-use-reservation-check-clusters">In-Use Reservation Check (clusters)</h2>
+
+<p>Defines the frequency to check for user connections during an server reservation. Cluster reservations are considered to be active for a longer duration, it is recommended this value be high such as 30 minutes or an hour. Because this is a cluster reservation if the user is not actively connected to the machine no action is taken until the scheduled end of the reservation.</p>
+
+<p><img src="images/Screen Shot 2017-03-16 at 1.57.47 PM.png" width="500" border="1" /></p>
+
+<h2 id="connected-user-check-threshold">Connected User Check Threshold</h2>
+
+<p>The Connected User Check Threshold instructs the VCL system to not perform active user checks for reservations that have durations over the defined time period. For instance if you a server or long-term reservation that might last for months there is no need for the System to confirm the user is connected or not. This reduces the number of VCL tasks that have to occur for given reservations.</p>
+
+<p><img src="images/Screen Shot 2017-03-15 at 4.08.48 PM.png" width="500" border="1" /></p>
+
+<h2 id="reconnect-to-reservation-timeout">Reconnect To Reservation Timeout</h2>
+
+<p>The Reconnect To Reservation Timeout variable determines the amount of time (in minutes) to wait for a user to reconnect to their reservation or reserved machine. If the user does not reconnect within the defined time period the VCL will reclaim the machine. In many cases when users are done with a VCL image, they simply logout or disconnect a leave do not release the reservation. This setting is useful to reclaim machines that have been abandoned. It is not recommended to set this value too low as will affect the user experience. Customers have found that 15-20 minutes is a reasonable value for a large user base.</p>
+
+<p><img src="images/Screen Shot 2017-03-15 at 4.31.01 PM.png" width="500" border="1" /></p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="http://github.com/pathoma4/vcl/edit/gh-pages/ConfiguringReservationTimeoutThresholds.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>
