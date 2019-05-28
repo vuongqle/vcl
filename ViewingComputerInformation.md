@@ -7,7 +7,7 @@ permalink: ViewingComputerInformation.html
 
 On the VCL website, computers act as virtual machine hosts that users are able to connect to and create reservations for images that pertain to their interest.
 
-With administration permissions, administrators are capable of modifying the properties of the existing computers within VCL.
+With administration permissions, administrators are capable of viewing and modifying the properties of the existing computers within VCL.
 
 This guide will highlight the steps on how to view computer information.
 
