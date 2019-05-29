@@ -1,7 +1,7 @@
 ---
 title: Viewing Computer Information
 last_updated: May 28, 2019
-permalink: ViewingComputerInformation.html
+permalink: viewing-computer-information.html
 ---
 ## Overview
 
@@ -16,7 +16,7 @@ This guide will highlight the steps on how to view computer information.
 1. Click **Manage** and then navigate to **Manage Computers** and click it.     
    <img src="images/manage_computers.png" width="300" border="1">
    
-2. Select _Edit Computer Profiles_ and click **Submit** 
+2. Select _Edit Computer Profiles_ and click **Submit.** 
    
    <img src="images/submit_computer_edit.png" width="300" border="1">
 3. Select _Edit_ next to the computer information interested in
