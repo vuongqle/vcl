@@ -1,13 +1,14 @@
 ---
-title: Block Allocations
-last_updated: June 03, 2019
-permalink: block-allocations.html
+title: What is a Block Allocation
+last_updated: May 30, 2019
+permalink: what-is-a-block-allocation.html
 ---
 
-## VCL Block Allocations
-Block Allocations are a way to have a set of machines preloaded with a particular environment at specified times and made available to a specific group of users.
+## Overview
+A block allocation is a pre-allocation for a group of users using a specific environment
 
 Refer to these pages for more information on **Block Allocation**:
+* [Block Allocation](https://cwiki.apache.org/confluence/pages/createpage.action?spaceKey=VCLDOCS&title=What+is+a+Block+Allocation&linkCreation=true&fromPageId=68715524)
 * [How Block Allocations Work](https://cwiki.apache.org/confluence/pages/createpage.action?useDraft=true&spaceKey=VCLDOCS&draftId=115529624&draftShareId=ecc63207-e1a1-4a1c-ba3e-ea731b4500bb&&)
 * [Benefits of Block Allocations](https://cwiki.apache.org/confluence/pages/resumedraft.action?draftId=115529625&draftShareId=3f1838f9-5486-40c7-8fb7-f37d15c79387&)
 * [Block Allocation Properties](https://cwiki.apache.org/confluence/pages/resumedraft.action?draftId=115529626&draftShareId=2d3d43f3-280c-4cc5-9449-379791e68c50&)
