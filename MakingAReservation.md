@@ -50,3 +50,5 @@ If using a version of VCL prior to 2.4, please see [Making a Reservation (previo
 * Click the **Connect** button to display information on how to connect to the reservation:
 
     <img src="images/resconnectdlg.png" width="500" border="1">
+
+fahfoajfa

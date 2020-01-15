@@ -4,7 +4,7 @@ last_updated: March 19, 2019
 permalink: User-Groups.html
 ---
 
-## Overview
+Overview
 
 Many tasks in VCL that relate to users are done with User Groups rather than directly with users. This simplifies management of users as actions can be done to large groups at once. User groups are added, edited, and deleted under Manage Groups. User groups cannot be deleted when they are in use in some part of VCL. Attempting to delete a group that is in use will display a message stating where the group is still being used. In order to see this portion of the web site, a user needs to have the **groupAdmin** user permission somewhere in the Privilege tree.
 
